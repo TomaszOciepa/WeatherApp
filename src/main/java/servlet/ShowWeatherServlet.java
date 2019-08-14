@@ -51,7 +51,10 @@ public class ShowWeatherServlet extends HttpServlet {
         model.put("cityID", cityDetails.getId());
         model.put("cityName", cityDetails.getName());
         model.put("cityDate", cityDetails.getDate());
+        model.put("cityHour", cityDetails.getHour());
         model.put("cityTemperature", cityDetails.getTemperature());
+        model.put("cityWindSpeed", cityDetails.getWindSpeed());
+
 
         try {
             template.process(model, out);
