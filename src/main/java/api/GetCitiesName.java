@@ -1,45 +1,24 @@
 package api;
 
+import javax.ejb.Stateless;
 import javax.json.*;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class WeatherIMGW {
+@Stateless
+public class GetCitiesName {
 
-    private static final String IMGW_API = "https://danepubliczne.imgw.pl/api/data/synop";
+    public List<String> getCitiesName() {
 
-    public List<String> getAllStations() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(IMGW_API);
-        Response response = target.request().get();
+        List<String> citiesList = new ArrayList<>();
 
-        String restResponse = response.readEntity(String.class);
-        response.close();
+        GetAllJsonFile getAllJsonFile = new GetAllJsonFile();
+        JsonArray jsonObject1 = getAllJsonFile.getJson();
 
-        InputStream inputStream = new ByteArrayInputStream(restResponse.getBytes());
-        JsonReaderFactory readerFactory = Json.createReaderFactory(Collections.emptyMap());
-
-        try (JsonReader jsonReader = readerFactory.createReader(inputStream)) {
-            JsonArray jsonObject1 = jsonReader.readArray();
-
-            List<String> cityName = new ArrayList<>();
-
-            for (int i = 0; i < jsonObject1.size(); i++) {
-                cityName.add(jsonObject1.getJsonObject(i).getString("stacja"));
-            }
-
-            return cityName;
-
+        for (int i = 0; i < jsonObject1.size(); i++) {
+            String station_name = jsonObject1.getJsonObject(i).getString("stacja");
+            citiesList.add(station_name);
         }
 
+        return citiesList;
     }
-
-
 }
