@@ -1,8 +1,5 @@
 package api;
 
-import api.model.RestResponse;
-import api.model.StationDetails;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -14,19 +11,17 @@ import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Collections;
-import java.util.List;
 
 public class WeatherIMGW {
 
-    private static final String IMGW_API = "https://danepubliczne.imgw.pl/api/data/synop/id/12235";
+    private static final String IMGW_API = "https://danepubliczne.imgw.pl/api/data/synop/id/12295";
 
     public String getAllStations() {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(IMGW_API );
+        WebTarget target = client.target(IMGW_API);
         Response response = target.request().get();
 
         String restResponse = response.readEntity(String.class);
-//        List<StationDetails> stationDetailsList = (List<StationDetails>) response.getEntity();
         response.close();
 
 
@@ -39,17 +34,6 @@ public class WeatherIMGW {
                     .getString("stacja");
 
         }
-
-//        return restResponse.toString();
-
-//        return restResponse.getStationsResult().getResult();
-
-//        restResponse.getStationsResult().getResult();
-
-//        return restResponse.getStationsResult().getResult().get(1).getStation();
-
-
-//        return stationDetailsList;
 
     }
 

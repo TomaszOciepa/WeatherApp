@@ -2,7 +2,6 @@ package servlet;
 
 import api.JSON;
 import api.WeatherIMGW;
-import api.model.StationDetails;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @WebServlet(urlPatterns = ("/"))
@@ -39,7 +37,7 @@ public class IndexServlet extends HttpServlet {
         int jsonStr = json.createJson();
 
         Map<String, Object> model = new HashMap<>();
-        model.put("json", stationDetails);
+        model.put("json",stationDetails);
 
 
         template = templateProvider.getTemplate(getServletContext(), "index");
