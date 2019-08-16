@@ -1,9 +1,7 @@
 package servlet;
 
 import api.FindCity;
-//import api.GetCity;
 import api.GetCity;
-import api.GetCityJsonFile;
 import api.model.City;
 
 import api.model.CityDetails;
@@ -45,8 +43,6 @@ public class ShowWeatherServlet extends HttpServlet {
 
         CityDetails cityDetails = getCity.get(myCity.getId());
 
-
-
         Map<String, Object> model = new HashMap<>();
         model.put("cityID", cityDetails.getId());
         model.put("cityName", cityDetails.getName());
@@ -54,7 +50,6 @@ public class ShowWeatherServlet extends HttpServlet {
         model.put("cityHour", cityDetails.getHour());
         model.put("cityTemperature", cityDetails.getTemperature());
         model.put("cityWindSpeed", cityDetails.getWindSpeed());
-
 
         try {
             template.process(model, out);

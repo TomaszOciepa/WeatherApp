@@ -10,11 +10,10 @@ public class GetCities {
 
     public List<City> get(){
 
-        GetAllJsonFile getAllJsonFile = new GetAllJsonFile();
-        JsonArray jsonObject1 = getAllJsonFile.getJson();
+        JsonFileAll jsonFileAll = new JsonFileAll();
+        JsonArray jsonObject1 = jsonFileAll.getJson();
 
         List<City> cityList = new ArrayList<>();
-
         for (int i = 0; i < jsonObject1.size(); i++) {
             String id = jsonObject1.getJsonObject(i).getString("id_stacji");
             String name = jsonObject1.getJsonObject(i).getString("stacja");

@@ -1,8 +1,6 @@
 package servlet;
 
-
-import api.GetCitiesName;
-import api.model.City;
+import api.GetCitiesList;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -25,8 +23,7 @@ public class SelectCityServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private GetCitiesName getCitiesName;
-
+    private GetCitiesList getCitiesList;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,7 +32,7 @@ public class SelectCityServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         Template template;
 
-        List<String> citiesList = getCitiesName.getCitiesName();
+        List<String> citiesList = getCitiesList.getCitiesName();
         Map<String, Object> model = new HashMap<>();
         model.put("cities", citiesList);
 

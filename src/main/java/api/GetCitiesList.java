@@ -5,15 +5,14 @@ import javax.json.*;
 import java.util.*;
 
 @Stateless
-public class GetCitiesName {
+public class GetCitiesList {
 
     public List<String> getCitiesName() {
 
+        JsonFileAll jsonFileAll = new JsonFileAll();
+        JsonArray jsonObject1 = jsonFileAll.getJson();
+
         List<String> citiesList = new ArrayList<>();
-
-        GetAllJsonFile getAllJsonFile = new GetAllJsonFile();
-        JsonArray jsonObject1 = getAllJsonFile.getJson();
-
         for (int i = 0; i < jsonObject1.size(); i++) {
             String station_name = jsonObject1.getJsonObject(i).getString("stacja");
             citiesList.add(station_name);
