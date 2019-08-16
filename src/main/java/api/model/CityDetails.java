@@ -8,14 +8,23 @@ public class CityDetails {
     private String hour;
     private String temperature;
     private String windSpeed;
+    private String windDirection;
+    private String pressure;
+    private String humidity;
+    private String totalRainfall;
 
-    public CityDetails(String id, String name, String date, String hour, String temperature, String windSpeed) {
+
+    public CityDetails(String id, String name, String date, String hour, String temperature, String windSpeed, String windDirection, String pressure, String humidity, String totalRainfall) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.hour = hour;
         this.temperature = temperature;
         this.windSpeed = windSpeed;
+        this.windDirection = windDirection;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.totalRainfall = totalRainfall;
     }
 
     public String getId() {
@@ -64,5 +73,37 @@ public class CityDetails {
 
     public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
+    }
+
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
+    }
+
+    public String getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(String pressure) {
+        this.pressure = pressure;
+    }
+
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getTotalRainfall() {
+        return totalRainfall;
+    }
+
+    public void setTotalRainfall(String totalRainfall) {
+        this.totalRainfall = totalRainfall;
     }
 }
