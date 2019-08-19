@@ -1,20 +1,24 @@
 package api.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class CityDetails {
 
-    private String id;
+    private int id;
     private String name;
-    private String date;
-    private String hour;
-    private String temperature;
-    private String windSpeed;
-    private String windDirection;
-    private String pressure;
-    private String humidity;
-    private String totalRainfall;
+    private LocalDate date;
+    private LocalTime hour;
+    private double temperature;
+    private int windSpeed;
+    private int windDirection;
+    private double pressure;
+    private double humidity;
+    private BigDecimal totalRainfall;
 
 
-    public CityDetails(String id, String name, String date, String hour, String temperature, String windSpeed, String windDirection, String pressure, String humidity, String totalRainfall) {
+    public CityDetails(int id, String name, LocalDate date, LocalTime hour, double temperature, int windSpeed, int windDirection, double pressure, double humidity, BigDecimal totalRainfall) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -27,11 +31,11 @@ public class CityDetails {
         this.totalRainfall = totalRainfall;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -43,67 +47,67 @@ public class CityDetails {
         this.name = name;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getHour() {
+    public LocalTime getHour() {
         return hour;
     }
 
-    public void setHour(String hour) {
+    public void setHour(LocalTime hour) {
         this.hour = hour;
     }
 
-    public String getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(String temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 
-    public String getWindSpeed() {
+    public int getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(String windSpeed) {
+    public void setWindSpeed(int windSpeed) {
         this.windSpeed = windSpeed;
     }
 
-    public String getWindDirection() {
+    public int getWindDirection() {
         return windDirection;
     }
 
-    public void setWindDirection(String windDirection) {
+    public void setWindDirection(int windDirection) {
         this.windDirection = windDirection;
     }
 
-    public String getPressure() {
+    public double getPressure() {
         return pressure;
     }
 
-    public void setPressure(String pressure) {
+    public void setPressure(double pressure) {
         this.pressure = pressure;
     }
 
-    public String getHumidity() {
+    public double getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(String humidity) {
+    public void setHumidity(double humidity) {
         this.humidity = humidity;
     }
 
-    public String getTotalRainfall() {
+    public BigDecimal getTotalRainfall() {
         return totalRainfall;
     }
 
-    public void setTotalRainfall(String totalRainfall) {
+    public void setTotalRainfall(BigDecimal totalRainfall) {
         this.totalRainfall = totalRainfall;
     }
 }

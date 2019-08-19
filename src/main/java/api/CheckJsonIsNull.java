@@ -7,7 +7,7 @@ public class CheckJsonIsNull {
     public String checkJson(String param, JsonObject object){
         String name;
         if (object.isNull(param)){
-          return name = "no data";
+          return name = "0";
         } else {
             return name = object.getString(param);
         }

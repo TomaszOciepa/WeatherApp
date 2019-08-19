@@ -1,9 +1,13 @@
 package api;
 
 import api.model.CityDetails;
+import convert.DataConverter;
 
 import javax.ejb.Stateless;
 import javax.json.JsonObject;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Stateless
 public class GetCity {
@@ -15,18 +19,23 @@ public class GetCity {
 
         CheckJsonIsNull checkJsonIsNull = new CheckJsonIsNull();
 
-        String id_station = checkJsonIsNull.checkJson("id_stacji", objectJson);
+        int id_station = Integer.parseInt(checkJsonIsNull.checkJson("id_stacji", objectJson));
         String name_station = checkJsonIsNull.checkJson("stacja", objectJson);
-        String date = checkJsonIsNull.checkJson("data_pomiaru", objectJson);
-        String hour = checkJsonIsNull.checkJson("godzina_pomiaru", objectJson);
-        String temperature = checkJsonIsNull.checkJson("temperatura", objectJson);
-        String windSpeed = checkJsonIsNull.checkJson("predkosc_wiatru", objectJson);
-        String windDirection = checkJsonIsNull.checkJson("kierunek_wiatru", objectJson);
-        String pressure = checkJsonIsNull.checkJson("cisnienie", objectJson);
-        String humidity = checkJsonIsNull.checkJson("wilgotnosc_wzgledna", objectJson);
-        String totalRainfall = checkJsonIsNull.checkJson("suma_opadu", objectJson);
 
-        CityDetails cityDetails = new CityDetails(id_station, name_station, date, hour, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall);
+        String dateStr = checkJsonIsNull.checkJson("data_pomiaru", objectJson);
+        DataConverter dataConverter = new DataConverter();
+        LocalDate date = dataConverter.ChangeStringToLocalData(dateStr);
+
+        int hour = Integer.parseInt(checkJsonIsNull.checkJson("godzina_pomiaru", objectJson));
+        LocalTime time = LocalTime.of(hour, 0);
+        double temperature = Double.parseDouble(checkJsonIsNull.checkJson("temperatura", objectJson));
+        int windSpeed = Integer.parseInt(checkJsonIsNull.checkJson("predkosc_wiatru", objectJson));
+        int windDirection = Integer.parseInt(checkJsonIsNull.checkJson("kierunek_wiatru", objectJson));
+        double pressure = Double.parseDouble(checkJsonIsNull.checkJson("cisnienie", objectJson));
+        double humidity = Double.parseDouble(checkJsonIsNull.checkJson("wilgotnosc_wzgledna", objectJson));
+        BigDecimal totalRainfall = new BigDecimal(checkJsonIsNull.checkJson("suma_opadu", objectJson));
+
+        CityDetails cityDetails = new CityDetails(id_station, name_station, date, time, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall);
 
         return cityDetails;
     }
