@@ -4,6 +4,8 @@ import api.GetCitiesList;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -19,6 +21,8 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = ("select-city"))
 public class SelectCityServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SelectCityServlet.class);
 
     @Inject
     private TemplateProvider templateProvider;
@@ -38,9 +42,11 @@ public class SelectCityServlet extends HttpServlet {
 
         template = templateProvider.getTemplate(getServletContext(), "select-city");
         try {
+            LOG.info("Load template select-city");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
+            LOG.warn("No load template select-city");
         }
     }
 }

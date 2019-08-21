@@ -3,6 +3,8 @@ package servlet;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -18,11 +20,15 @@ import java.util.Map;
 @WebServlet(urlPatterns = ("/"))
 public class IndexServlet extends HttpServlet {
 
+    private static final Logger LOG = LoggerFactory.getLogger(IndexServlet.class);
+
     @Inject
     private TemplateProvider templateProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
 
         resp.addHeader("Content-Type", "text/html; charset=utf-8");
         PrintWriter out = resp.getWriter();
@@ -31,9 +37,11 @@ public class IndexServlet extends HttpServlet {
 
         template = templateProvider.getTemplate(getServletContext(), "index");
         try {
+            LOG.info("Load template index");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
+            LOG.warn("No load template index");
         }
     }
 }
