@@ -1,6 +1,6 @@
 package servlet;
 
-import api.GetCitiesList;
+import api.GetStationsName;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -19,15 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("select-city"))
-public class SelectCityServlet extends HttpServlet {
+@WebServlet(urlPatterns = ("select-station"))
+public class SelectStationServlet extends HttpServlet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SelectCityServlet.class);
-
+    private static final Logger LOG = LoggerFactory.getLogger(SelectStationServlet.class);
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private GetCitiesList getCitiesList;
+    private GetStationsName getStationsName;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,17 +35,17 @@ public class SelectCityServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         Template template;
 
-        List<String> citiesList = getCitiesList.getCitiesName();
+        List<String> stationsNameList = getStationsName.get();
         Map<String, Object> model = new HashMap<>();
-        model.put("cities", citiesList);
+        model.put("stations", stationsNameList);
 
-        template = templateProvider.getTemplate(getServletContext(), "select-city");
+        template = templateProvider.getTemplate(getServletContext(), "select-station");
         try {
-            LOG.info("Load template select-city");
+            LOG.info("Load template select-station");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-            LOG.warn("No load template select-city");
+            LOG.warn("No load template select-station");
         }
     }
 }

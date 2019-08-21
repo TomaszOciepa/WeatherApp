@@ -1,21 +1,24 @@
 package api;
 
-import api.model.CityDetails;
 import convert.DataConverter;
+import data.model.Station;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Stateless
-public class GetCity {
+public class GetStation {
 
-    public CityDetails get(String id) {
+    @Inject
+    private GetJsonStation getJsonStation;
 
-        JsonFileStation jsonFileStation = new JsonFileStation();
-        JsonObject objectJson = jsonFileStation.getCity(id);
+    public Station get(int id) {
+
+        JsonObject objectJson = getJsonStation.getCity(id);
 
         CheckJsonIsNull checkJsonIsNull = new CheckJsonIsNull();
 
@@ -35,8 +38,8 @@ public class GetCity {
         double humidity = Double.parseDouble(checkJsonIsNull.checkJson("wilgotnosc_wzgledna", objectJson));
         BigDecimal totalRainfall = new BigDecimal(checkJsonIsNull.checkJson("suma_opadu", objectJson));
 
-        CityDetails cityDetails = new CityDetails(id_station, name_station, date, time, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall);
+        Station station = new Station(id_station, name_station, date, time, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall);
 
-        return cityDetails;
+        return station;
     }
 }

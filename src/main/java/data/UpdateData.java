@@ -1,6 +1,7 @@
 package data;
 
-import api.JsonFileAll;
+import api.GetStation;
+import api.GetJsonAll;
 import data.dao.StationDao;
 import data.model.Station;
 
@@ -15,13 +16,14 @@ public class UpdateData {
     private GetStation getStation;
     @Inject
     private StationDao stationDao;
+    @Inject
+    private GetJsonAll getJsonAll;
 
-    public void get() {
-        JsonFileAll jsonFileAll = new JsonFileAll();
-        JsonArray jsonObject = jsonFileAll.getJson();
+    public void save() {
+        JsonArray jsonObject = getJsonAll.getJson();
 
         for (int i = 0; i < jsonObject.size(); i++) {
-            String id = jsonObject.getJsonObject(i).getString("id_stacji");
+            int id = Integer.parseInt(jsonObject.getJsonObject(i).getString("id_stacji"));
             Station station = getStation.get(id);
             stationDao.save(station);
         }

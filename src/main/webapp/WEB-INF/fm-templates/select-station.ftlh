@@ -1,10 +1,10 @@
 <form method="get" action="get-weather">
     <div class="form-group">
         <label for="exampleFormControlSelect1">Select City</label>
-        <select name="city" class="form-control" id="Select1" required>
+        <select name="station" class="form-control" id="Select1" required>
             <option></option>
-            <#list cities as c>
-                <option>${c}</option>
+            <#list stations as s>
+                <option>${s}</option>
             </#list>
         </select>
     </div>

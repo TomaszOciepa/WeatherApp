@@ -21,14 +21,11 @@ import java.util.Map;
 public class IndexServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(IndexServlet.class);
-
     @Inject
     private TemplateProvider templateProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
 
         resp.addHeader("Content-Type", "text/html; charset=utf-8");
         PrintWriter out = resp.getWriter();

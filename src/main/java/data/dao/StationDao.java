@@ -15,7 +15,7 @@ public class StationDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public long save(Station station){
+    public long save(Station station) {
         entityManager.persist(station);
         return station.getStationId();
     }

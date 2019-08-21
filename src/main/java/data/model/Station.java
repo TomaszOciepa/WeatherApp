@@ -47,6 +47,11 @@ public class Station {
     public Station() {
     }
 
+    public Station(int stationNumber, String stationName) {
+        this.stationNumber = stationNumber;
+        this.stationName = stationName;
+    }
+
     public Station(int stationNumber, String stationName, LocalDate stationDate, LocalTime stationHour, double stationTemperature, int stationWindSpeed, int stationWindDirection, double stationPressure, double stationHumidity, BigDecimal stationTotalRainfall) {
         this.stationNumber = stationNumber;
         this.stationName = stationName;

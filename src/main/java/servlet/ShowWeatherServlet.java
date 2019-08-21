@@ -1,13 +1,14 @@
 package servlet;
 
-import api.FindCity;
-import api.GetCity;
-import api.model.City;
+import api.FindStation;
 
-import api.model.CityDetails;
+import api.GetStation;
+import data.model.Station;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -23,12 +24,13 @@ import java.util.Map;
 @WebServlet(urlPatterns = ("get-weather"))
 public class ShowWeatherServlet extends HttpServlet {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ShowWeatherServlet.class);
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private FindCity findCity;
+    private FindStation findStation;
     @Inject
-    private GetCity getCity;
+    private GetStation getStation;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,26 +40,28 @@ public class ShowWeatherServlet extends HttpServlet {
         Template template;
         template = templateProvider.getTemplate(getServletContext(), "show-weather");
 
-        String city = req.getParameter("city");
-        City myCity = findCity.get(city);
+        String stationName = req.getParameter("station");
+        int stationId = findStation.get(stationName);
 
-        CityDetails cityDetails = getCity.get(myCity.getId());
+        Station station = getStation.get(stationId);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("cityID", cityDetails.getId());
-        model.put("cityName", cityDetails.getName());
-        model.put("cityDate", cityDetails.getDate());
-        model.put("cityHour", cityDetails.getHour());
-        model.put("cityTemperature", cityDetails.getTemperature());
-        model.put("cityWindSpeed", cityDetails.getWindSpeed());
-        model.put("windDirection", cityDetails.getWindDirection());
-        model.put("pressure", cityDetails.getPressure());
-        model.put("humidity", cityDetails.getHumidity());
-        model.put("totalRainfall", cityDetails.getTotalRainfall());
+        model.put("cityID", station.getStationNumber());
+        model.put("cityName", station.getStationName());
+        model.put("cityDate", station.getStationDate());
+        model.put("cityHour", station.getStationHour());
+        model.put("cityTemperature", station.getStationTemperature());
+        model.put("cityWindSpeed", station.getStationWindSpeed());
+        model.put("windDirection", station.getStationWindDirection());
+        model.put("pressure", station.getStationPressure());
+        model.put("humidity", station.getStationHumidity());
+        model.put("totalRainfall", station.getStationTotalRainfall());
 
         try {
+            LOG.info("Load template show-weather");
             template.process(model, out);
         } catch (TemplateException e) {
+            LOG.warn("No load template show-weather");
             e.printStackTrace();
         }
     }

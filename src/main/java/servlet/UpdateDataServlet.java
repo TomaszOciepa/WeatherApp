@@ -26,17 +26,15 @@ public class UpdateDataServlet extends HttpServlet {
     private TemplateProvider templateProvider;
     @Inject
     private UpdateData updateData;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.addHeader("Content-Type", "text/html; charset=utf-8");
         PrintWriter out = resp.getWriter();
         Template template;
 
-        updateData.get();
-
-
+        updateData.save();
         Map<String, Object> model = new HashMap<>();
-
         template = templateProvider.getTemplate(getServletContext(), "update-data");
         try {
             LOG.info("Load template update-data");

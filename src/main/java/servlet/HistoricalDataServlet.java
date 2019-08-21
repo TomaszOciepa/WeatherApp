@@ -21,7 +21,6 @@ import java.util.Map;
 public class HistoricalDataServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(HistoricalDataServlet.class);
-
     @Inject
     private TemplateProvider templateProvider;
 
