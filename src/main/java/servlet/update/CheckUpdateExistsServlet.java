@@ -1,6 +1,6 @@
-package servlet;
+package servlet.update;
 
-import data.UpdateData;
+import data.CheckUpdate;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -18,14 +18,14 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("update-data"))
-public class UpdateDataServlet extends HttpServlet {
+@WebServlet(urlPatterns = ("check-update-exists"))
+public class CheckUpdateExistsServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(UpdateDataServlet.class);
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private UpdateData updateData;
+    private CheckUpdate checkUpdate;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,15 +33,22 @@ public class UpdateDataServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         Template template;
 
-        updateData.save();
         Map<String, Object> model = new HashMap<>();
-        template = templateProvider.getTemplate(getServletContext(), "update-data");
+
+        if (checkUpdate.check()){
+            model.put("status", "ok");
+        }else {
+            model.put("status", "no");
+        }
+
+
+        template = templateProvider.getTemplate(getServletContext(), "check-update-exists");
         try {
-            LOG.info("Load template update-data");
+            LOG.info("Load template check-update-exists");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-            LOG.warn("No load template update-data");
+            LOG.warn("No load template check-update-exists");
         }
     }
 }

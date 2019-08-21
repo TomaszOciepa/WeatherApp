@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -40,4 +41,12 @@ public class StationDao {
 
         return (List<Station>) query.getResultList();
     }
+
+    public List<Station> lastUpdate(){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s ORDER BY s.stationDateTime DESC");
+
+        return (List<Station>) query.getResultList();
+    }
+
+
 }
