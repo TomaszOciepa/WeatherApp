@@ -1,7 +1,9 @@
 package convert;
 
+import javax.ejb.Stateless;
 import java.time.LocalDate;
 
+@Stateless
 public class DataConverter {
 
     public LocalDate ChangeStringToLocalData(String s){

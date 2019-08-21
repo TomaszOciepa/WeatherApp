@@ -2,8 +2,7 @@ package data.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "STATION")
@@ -20,11 +19,8 @@ public class Station {
     @Column(name = "STATION_NAME")
     private String stationName;
 
-    @Column(name = "STATION_DATE")
-    private LocalDate stationDate;
-
-    @Column(name = "STATION_HOUR")
-    private LocalTime stationHour;
+    @Column(name = "STATION_DATE_TIME")
+    private LocalDateTime stationDateTime;
 
     @Column(name = "STATION_TEMPERATURE")
     private double stationTemperature;
@@ -52,11 +48,10 @@ public class Station {
         this.stationName = stationName;
     }
 
-    public Station(int stationNumber, String stationName, LocalDate stationDate, LocalTime stationHour, double stationTemperature, int stationWindSpeed, int stationWindDirection, double stationPressure, double stationHumidity, BigDecimal stationTotalRainfall) {
+    public Station(int stationNumber, String stationName, LocalDateTime stationDateTime, double stationTemperature, int stationWindSpeed, int stationWindDirection, double stationPressure, double stationHumidity, BigDecimal stationTotalRainfall) {
         this.stationNumber = stationNumber;
         this.stationName = stationName;
-        this.stationDate = stationDate;
-        this.stationHour = stationHour;
+        this.stationDateTime = stationDateTime;
         this.stationTemperature = stationTemperature;
         this.stationWindSpeed = stationWindSpeed;
         this.stationWindDirection = stationWindDirection;
@@ -89,20 +84,12 @@ public class Station {
         this.stationName = stationName;
     }
 
-    public LocalDate getStationDate() {
-        return stationDate;
+    public LocalDateTime getStationDateTime() {
+        return stationDateTime;
     }
 
-    public void setStationDate(LocalDate stationDate) {
-        this.stationDate = stationDate;
-    }
-
-    public LocalTime getStationHour() {
-        return stationHour;
-    }
-
-    public void setStationHour(LocalTime stationHour) {
-        this.stationHour = stationHour;
+    public void setStationDateTime(LocalDateTime stationDateTime) {
+        this.stationDateTime = stationDateTime;
     }
 
     public double getStationTemperature() {

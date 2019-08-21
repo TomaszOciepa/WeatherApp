@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.json.JsonObject;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Stateless
@@ -15,6 +16,8 @@ public class GetStation {
 
     @Inject
     private GetJsonStation getJsonStation;
+    @Inject
+    private DataConverter dataConverter;
 
     public Station get(int id) {
 
@@ -26,11 +29,12 @@ public class GetStation {
         String name_station = checkJsonIsNull.checkJson("stacja", objectJson);
 
         String dateStr = checkJsonIsNull.checkJson("data_pomiaru", objectJson);
-        DataConverter dataConverter = new DataConverter();
         LocalDate date = dataConverter.ChangeStringToLocalData(dateStr);
 
         int hour = Integer.parseInt(checkJsonIsNull.checkJson("godzina_pomiaru", objectJson));
         LocalTime time = LocalTime.of(hour, 0);
+        LocalDateTime localDateTime = LocalDateTime.of(date, time);
+
         double temperature = Double.parseDouble(checkJsonIsNull.checkJson("temperatura", objectJson));
         int windSpeed = Integer.parseInt(checkJsonIsNull.checkJson("predkosc_wiatru", objectJson));
         int windDirection = Integer.parseInt(checkJsonIsNull.checkJson("kierunek_wiatru", objectJson));
@@ -38,7 +42,7 @@ public class GetStation {
         double humidity = Double.parseDouble(checkJsonIsNull.checkJson("wilgotnosc_wzgledna", objectJson));
         BigDecimal totalRainfall = new BigDecimal(checkJsonIsNull.checkJson("suma_opadu", objectJson));
 
-        Station station = new Station(id_station, name_station, date, time, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall);
+        Station station = new Station(id_station, name_station, localDateTime, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall);
 
         return station;
     }

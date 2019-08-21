@@ -1,7 +1,7 @@
 <h1>Weather for ${cityName}</h1>
 <p><b>Id station:</b> ${cityID?c}</p>
-<p><b>Date of measurement:</b> ${cityDate}</p>
-<p><b>Time of measurement:</b> ${cityHour}</p>
+<p><b>Date of measurement:</b> ${cityDay} ${cityMonth} ${cityYear?c}</p>
+<p><b>Time of measurement:</b> ${cityHour}:00</p>
 <p><b>Temperature: </b>${cityTemperature} &#x2103</p>
 <p><b>Wind speed: </b>${cityWindSpeed?c} m/s</p>
 <p><b>Wind direction: </b>${windDirection}</p>

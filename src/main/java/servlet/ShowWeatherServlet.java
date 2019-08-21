@@ -48,8 +48,10 @@ public class ShowWeatherServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
         model.put("cityID", station.getStationNumber());
         model.put("cityName", station.getStationName());
-        model.put("cityDate", station.getStationDate());
-        model.put("cityHour", station.getStationHour());
+        model.put("cityYear", station.getStationDateTime().getYear());
+        model.put("cityMonth", station.getStationDateTime().getMonth());
+        model.put("cityDay", station.getStationDateTime().getDayOfMonth());
+        model.put("cityHour", station.getStationDateTime().getHour());
         model.put("cityTemperature", station.getStationTemperature());
         model.put("cityWindSpeed", station.getStationWindSpeed());
         model.put("windDirection", station.getStationWindDirection());
