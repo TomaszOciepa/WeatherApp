@@ -4,10 +4,11 @@
     <div class="container">
 <div class="jumbotron">
     <h1 class="display-4">Weather service</h1>
-    <p class="lead">Check the weather for cities in Poland</p>
+    <p class="lead">The application checks the current weather. You can also check historical data in Poland</p>
     <hr class="my-4">
     <p>We use data https://danepubliczne.imgw.pl/</p>
-    <a class="btn btn-primary btn-lg" href="select-city" role="button">Choose a city</a>
+    <a class="btn btn-primary btn-lg" href="select-city" role="button">Check current weather</a>
+    <a class="btn btn-primary btn-lg" href="historical-data" role="button">Check historical data weather</a>
 </div>
 
 <#include "footer.ftlh">
