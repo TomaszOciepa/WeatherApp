@@ -1,4 +1,4 @@
-package servlet;
+package servlet.curentWeather;
 
 import api.FindStation;
 

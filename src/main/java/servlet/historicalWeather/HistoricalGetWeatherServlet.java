@@ -1,6 +1,7 @@
-package servlet;
+package servlet.historicalWeather;
 
-import api.GetStationsName;
+import data.dao.StationDao;
+import data.model.Station;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -19,14 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("select-station"))
-public class SelectStationServlet extends HttpServlet {
+@WebServlet(urlPatterns = ("historical-get-weather"))
+public class HistoricalGetWeatherServlet extends HttpServlet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SelectStationServlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HistoricalGetWeatherServlet.class);
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private GetStationsName getStationsName;
+    private StationDao stationDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,17 +36,20 @@ public class SelectStationServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         Template template;
 
-        List<String> stationsNameList = getStationsName.get();
         Map<String, Object> model = new HashMap<>();
-        model.put("stations", stationsNameList);
+        String stationName = req.getParameter("station");
+        List<Station> station = stationDao.getSelectedCity(stationName);
 
-        template = templateProvider.getTemplate(getServletContext(), "select-station");
+        model.put("station", station);
+        model.put("name", station.get(0).getStationName());
+
+        template = templateProvider.getTemplate(getServletContext(), "historical-get-weather");
         try {
-            LOG.info("Load template select-station");
+            LOG.info("Load template historical-get-weather");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-            LOG.warn("No load template select-station");
+            LOG.warn("No load template historical-get-weather");
         }
     }
 }

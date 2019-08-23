@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -40,6 +39,17 @@ public class StationDao {
         final Query query = entityManager.createQuery("SELECT s FROM Station s");
 
         return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getSelectedCity(String city){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationName = :city");
+        query.setParameter("city", city);
+
+        return (List<Station>) query.getResultList();
+    }
+    public List<String> getCitiesName(){
+        final Query query = entityManager.createQuery("SELECT s.stationName FROM Station s");
+        return (List<String>) query.getResultList();
     }
 
     public List<Station> lastUpdate(){
