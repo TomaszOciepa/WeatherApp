@@ -1,5 +1,6 @@
 package servlet.historicalWeather;
 
+import data.GetAverageTempForCity;
 import data.dao.StationDao;
 import data.model.Station;
 import freeMarker.TemplateProvider;
@@ -28,6 +29,8 @@ public class HistoricalGetWeatherServlet extends HttpServlet {
     private TemplateProvider templateProvider;
     @Inject
     private StationDao stationDao;
+    @Inject
+    private GetAverageTempForCity getAverageTempForCity;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,9 +42,11 @@ public class HistoricalGetWeatherServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
         String stationName = req.getParameter("station");
         List<Station> station = stationDao.getSelectedCity(stationName);
+        double average = getAverageTempForCity.get(stationName);
 
         model.put("station", station);
         model.put("name", station.get(0).getStationName());
+        model.put("average", average);
 
         template = templateProvider.getTemplate(getServletContext(), "historical-get-weather");
         try {
