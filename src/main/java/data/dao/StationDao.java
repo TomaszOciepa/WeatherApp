@@ -52,6 +52,16 @@ public class StationDao {
         return (List<String>) query.getResultList();
     }
 
+    public List<Double> getSumTempForPoland(){
+        final Query query = entityManager.createQuery("SELECT SUM(s.stationTemperature) FROM Station s");
+        return query.getResultList();
+    }
+
+    public List<Long> getCountTempForPoland(){
+        final Query query = entityManager.createQuery("SELECT COUNT(s.stationTemperature) FROM Station s");
+        return (List<Long>) query.getResultList();
+    }
+
     public List<Station> lastUpdate(){
         final Query query = entityManager.createQuery("SELECT s FROM Station s ORDER BY s.stationDateTime DESC");
 
