@@ -86,6 +86,41 @@
             </div>
         </div>
     </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour"
+                        aria-expanded="false" aria-controls="collapseThree">
+                    Average temperature for selected month.
+                </button>
+            </h2>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+                <form method="get" action="historical-check-average-temp-month-city">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select Month</label>
+                        <select name="month" class="form-control" id="SelectMonth" required>
+                            <option></option>
+                            <option>January</option>
+                            <option>February</option>
+                            <option>March</option>
+                            <option>April</option>
+                            <option>May</option>
+                            <option>June</option>
+                            <option>July</option>
+                            <option>August</option>
+                            <option>September</option>
+                            <option>October</option>
+                            <option>November</option>
+                            <option>December</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Check</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <#include "footer.ftlh">
