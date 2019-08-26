@@ -79,5 +79,18 @@ public class StationDao {
         return (List<Long>) query.getResultList();
     }
 
+    public List<Double> getSumTempYearForCity(int year, String city){
+        final Query query = entityManager.createQuery("select SUM(s.stationTemperature) FROM Station s WHERE s.stationDateTime LIKE CONCAT(:year, '%') AND s.stationName = :city");
+        query.setParameter("year", year);
+        query.setParameter("city", city);
+        return (List<Double>) query.getResultList();
+    }
+
+    public List<Long> getCountTempYearForCity(int year, String city){
+        final Query query = entityManager.createQuery("select COUNT(s.stationTemperature) FROM Station s WHERE s.stationDateTime LIKE CONCAT(:year, '%') AND s.stationName = :city");
+        query.setParameter("year", year);
+        query.setParameter("city", city);
+        return (List<Long>) query.getResultList();
+    }
 
 }

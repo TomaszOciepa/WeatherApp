@@ -1,8 +1,6 @@
 package servlet.historicalWeather;
 
-import data.GetAverageTempForCity;
-import data.dao.StationDao;
-import data.model.Station;
+import data.GetAverageTempYearForCity;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -19,48 +17,44 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("historical-get-weather"))
-public class HistoricalGetWeatherServlet extends HttpServlet {
+@WebServlet(urlPatterns = ("historical-check-average-temp-year-city"))
+public class HistoricalCheckAverageTempYearCityServlet extends HttpServlet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HistoricalGetWeatherServlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HistoricalCheckAverageTempYearCityServlet.class);
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private StationDao stationDao;
-    @Inject
-    private GetAverageTempForCity getAverageTempForCity;
+    private GetAverageTempYearForCity getAverageTempYearForCity;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         resp.addHeader("Content-Type", "text/html; charset=utf-8");
         PrintWriter out = resp.getWriter();
         Template template;
 
         Map<String, Object> model = new HashMap<>();
-        String stationName = req.getParameter("station");
         HttpSession session = req.getSession(true);
-        session.setAttribute("station", stationName);
+        String station = String.valueOf(session.getAttribute("station"));
+        int year = Integer.parseInt(req.getParameter("year"));
 
-
-        List<Station> station = stationDao.getSelectedCity(stationName);
-        double average = getAverageTempForCity.get(stationName);
+        double average =getAverageTempYearForCity.get(year,station);
 
         model.put("station", station);
-        model.put("name", station.get(0).getStationName());
+        model.put("year", year);
         model.put("average", average);
 
-        template = templateProvider.getTemplate(getServletContext(), "historical-get-weather");
+
+
+
+        template = templateProvider.getTemplate(getServletContext(), "historical-check-average-temp-year-city");
         try {
-            LOG.info("Load template historical-get-weather");
+            LOG.info("Load template historical-check-average-temp-year-city");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-            LOG.warn("No load template historical-get-weather");
+            LOG.warn("No load template historical-check-average-temp-year-city");
         }
     }
-
 }
