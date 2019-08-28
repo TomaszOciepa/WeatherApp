@@ -1,6 +1,8 @@
 package servlet.historicalWeather;
 
 import data.GetAverageTempForCity;
+import data.GetMaxTempForCity;
+import data.GetMinTempForCity;
 import data.dao.StationDao;
 import data.model.Station;
 import freeMarker.TemplateProvider;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +36,10 @@ public class HistoricalGetWeatherServlet extends HttpServlet {
     private StationDao stationDao;
     @Inject
     private GetAverageTempForCity getAverageTempForCity;
+    @Inject
+    private GetMaxTempForCity getMaxTempForCity;
+    @Inject
+    private GetMinTempForCity getMinTempForCity;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,13 +53,28 @@ public class HistoricalGetWeatherServlet extends HttpServlet {
         HttpSession session = req.getSession(true);
         session.setAttribute("station", stationName);
 
-
         List<Station> station = stationDao.getSelectedCity(stationName);
         double average = getAverageTempForCity.get(stationName);
+        double maxTemp = getMaxTempForCity.getMaxTemp(stationName);
+        LocalDate maxTempDate = getMaxTempForCity.getDate(stationName);
+        LocalTime maxTempHour = getMaxTempForCity.getTime(stationName);
+
+        double minTemp = getMinTempForCity.getMinTemp(stationName);
+        LocalDate minTempDate = getMinTempForCity.getDate(stationName);
+        LocalTime minTempHour = getMinTempForCity.getHour(stationName);
+
 
         model.put("station", station);
         model.put("name", station.get(0).getStationName());
         model.put("average", average);
+
+        model.put("maxTemp", maxTemp);
+        model.put("maxTempDate", maxTempDate);
+        model.put("maxTempHour", maxTempHour);
+
+        model.put("minTemp", minTemp);
+        model.put("minTempDate", minTempDate);
+        model.put("minTempHour", minTempHour);
 
         template = templateProvider.getTemplate(getServletContext(), "historical-get-weather");
         try {

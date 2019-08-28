@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -41,70 +42,98 @@ public class StationDao {
         return (List<Station>) query.getResultList();
     }
 
-    public List<Station> getSelectedCity(String city){
+    public List<Station> getSelectedCity(String city) {
         final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationName = :city");
         query.setParameter("city", city);
 
         return (List<Station>) query.getResultList();
     }
-    public List<String> getCitiesName(){
+
+    public List<String> getCitiesName() {
         final Query query = entityManager.createQuery("SELECT s.stationName FROM Station s");
         return (List<String>) query.getResultList();
     }
 
-    public List<Double> getSumTempForPoland(){
+    public List<Double> getSumTempForPoland() {
         final Query query = entityManager.createQuery("SELECT SUM(s.stationTemperature) FROM Station s");
         return query.getResultList();
     }
 
-    public List<Long> getCountTempForPoland(){
+    public List<Long> getCountTempForPoland() {
         final Query query = entityManager.createQuery("SELECT COUNT(s.stationTemperature) FROM Station s");
         return (List<Long>) query.getResultList();
     }
 
-    public List<Station> lastUpdate(){
+    public List<Station> lastUpdate() {
         final Query query = entityManager.createQuery("SELECT s FROM Station s ORDER BY s.stationDateTime DESC");
         return (List<Station>) query.getResultList();
     }
 
-    public List<Double> getSumTempForCity(String city){
+    public List<Double> getSumTempForCity(String city) {
         final Query query = entityManager.createQuery("SELECT SUM (s.stationTemperature) FROM Station s WHERE s.stationName = :city");
         query.setParameter("city", city);
         return (List<Double>) query.getResultList();
     }
 
-    public List<Long> getCountTempForCity(String city){
+    public List<Long> getCountTempForCity(String city) {
         final Query query = entityManager.createQuery("SELECT COUNT(s.stationTemperature) FROM Station s WHERE s.stationName = :city");
         query.setParameter("city", city);
         return (List<Long>) query.getResultList();
     }
 
-    public List<Double> getSumTempYearForCity(int year, String city){
+    public List<Double> getSumTempYearForCity(int year, String city) {
         final Query query = entityManager.createQuery("select SUM(s.stationTemperature) FROM Station s WHERE s.stationDateTime LIKE CONCAT(:year, '%') AND s.stationName = :city");
         query.setParameter("year", year);
         query.setParameter("city", city);
         return (List<Double>) query.getResultList();
     }
 
-    public List<Long> getCountTempYearForCity(int year, String city){
+    public List<Long> getCountTempYearForCity(int year, String city) {
         final Query query = entityManager.createQuery("select COUNT(s.stationTemperature) FROM Station s WHERE s.stationDateTime LIKE CONCAT(:year, '%') AND s.stationName = :city");
         query.setParameter("year", year);
         query.setParameter("city", city);
         return (List<Long>) query.getResultList();
     }
 
-    public List<Double> getSumTempMonthForCity(int month, String city){
+    public List<Double> getSumTempMonthForCity(int month, String city) {
         final Query query = entityManager.createQuery("SELECT SUM(s.stationTemperature) FROM Station s WHERE s.stationDateTime LIKE CONCAT('%-%', :month, '-%') AND s.stationName = :city");
         query.setParameter("month", month);
         query.setParameter("city", city);
         return (List<Double>) query.getResultList();
     }
 
-    public List<Long> getCountTempMonthForCity(int month, String city){
+    public List<Long> getCountTempMonthForCity(int month, String city) {
         final Query query = entityManager.createQuery("SELECT COUNT(s.stationTemperature) FROM Station s WHERE  s.stationDateTime LIKE CONCAT('%-%', :month, '-%') AND s.stationName = :city");
         query.setParameter("month", month);
         query.setParameter("city", city);
         return (List<Long>) query.getResultList();
     }
 
+    public List<Double> getSumTempDayForCity(LocalDate date, String city) {
+        final Query query = entityManager.createQuery("SELECT SUM(s.stationTemperature) FROM Station s WHERE  s.stationDateTime LIKE CONCAT(:date, '%') AND s.stationName = :city");
+        query.setParameter("date", date);
+        query.setParameter("city", city);
+        return (List<Double>) query.getResultList();
+    }
+
+    public List<Long> getCountTempDayForCity(LocalDate date, String city) {
+        final Query query = entityManager.createQuery("SELECT COUNT (s.stationTemperature) FROM Station s WHERE  s.stationDateTime LIKE CONCAT(:date, '%') AND s.stationName = :city");
+        query.setParameter("date", date);
+        query.setParameter("city", city);
+        return (List<Long>) query.getResultList();
+    }
+
+    public List<Station> getMaxTempForCity(String city){
+        final  Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationName = :city ORDER BY s.stationTemperature DESC");
+        query.setParameter("city", city);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMinTempForCity(String city){
+        final  Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationName = :city ORDER BY s.stationTemperature ASC");
+        query.setParameter("city", city);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
 }

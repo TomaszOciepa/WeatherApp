@@ -45,6 +45,11 @@ public class Station {
     public Station() {
     }
 
+    public Station(LocalDateTime stationDateTime, double stationTemperature) {
+        this.stationDateTime = stationDateTime;
+        this.stationTemperature = stationTemperature;
+    }
+
     public Station(int stationNumber, String stationName) {
         this.stationNumber = stationNumber;
         this.stationName = stationName;
