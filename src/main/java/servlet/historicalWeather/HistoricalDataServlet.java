@@ -1,5 +1,8 @@
 package servlet.historicalWeather;
 
+import data.GetAverageTempForPoland;
+import data.GetMaxTempForPoland;
+import data.GetMinTempForPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -23,14 +26,32 @@ public class HistoricalDataServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(HistoricalDataServlet.class);
     @Inject
     private TemplateProvider templateProvider;
+    @Inject
+    private GetAverageTempForPoland getAverageTempForPoland;
+    @Inject
+    private GetMaxTempForPoland getMaxTempForPoland;
+    @Inject
+    private GetMinTempForPoland getMinTempForPoland;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.addHeader("Content-Type", "text/html; charset=utf-8");
         PrintWriter out = resp.getWriter();
         Template template;
-
         Map<String, Object> model = new HashMap<>();
+
+        double average = getAverageTempForPoland.get();
+        double maxTemp = getMaxTempForPoland.getMaxTemp();
+        String maxTempCity = getMaxTempForPoland.getCity();
+
+        double minTemp = getMinTempForPoland.getMinTemp();
+        String minTempCity = getMinTempForPoland.getCity();
+
+        model.put("average", average);
+        model.put("maxTemp", maxTemp);
+        model.put("maxTempCity", maxTempCity);
+        model.put("minTemp", minTemp);
+        model.put("minTempCity", minTempCity);
 
         template = templateProvider.getTemplate(getServletContext(), "historical-data");
         try {

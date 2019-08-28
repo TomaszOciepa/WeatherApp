@@ -136,4 +136,16 @@ public class StationDao {
         query.setMaxResults(1);
         return (List<Station>) query.getResultList();
     }
+
+    public List<Station> getMaxTempForPoland(){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s ORDER BY s.stationTemperature DESC ");
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMinTempForPoland(){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s ORDER BY s.stationTemperature ASC ");
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
 }
