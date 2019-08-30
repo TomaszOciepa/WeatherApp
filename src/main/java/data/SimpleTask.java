@@ -1,25 +1,17 @@
 package data;
 
+import data.dao.StationData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-
-
 public class SimpleTask implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleTask.class);
-    @Inject
-    private SimpleGetNowDate simpleGetNowDate;
+    StationData stationData = new StationData();
     @Override
     public void run() {
         LOG.info("Run executor");
-//        simpleGetNowDate.get();
-        String s = get();
-        LOG.info("Finish: "+s);
-
-    }
-
-    public String get(){
-    return simpleGetNowDate.get();
+//        LocalDateTime date = stationData.lastUpdate().get(0).getStationDateTime();
+        double date = stationData.getSumTempForPoland().get(0);
+        LOG.info("Finish: "+date);
     }
 }

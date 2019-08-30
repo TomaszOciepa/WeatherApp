@@ -40,20 +40,8 @@ public class ExecutorServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
         template = templateProvider.getTemplate(getServletContext(), "executor");
 
-        ScheduledFuture<?> futureResult = scheduledExecutor. scheduleAtFixedRate (new SimpleTask(),0, 5, TimeUnit.SECONDS);
+        scheduledExecutor.scheduleAtFixedRate (new SimpleTask(),10, 60, TimeUnit.SECONDS);
 
-        while (!futureResult.isDone()) {
-
-            try {
-
-                Thread.sleep(100); // Wait
-
-            } catch (InterruptedException e) {
-
-                e.printStackTrace();
-
-            }
-        }
 
         try {
             LOG.info("Load template executor");
