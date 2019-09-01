@@ -1,4 +1,4 @@
-package data;
+package update;
 
 import api.GetStation;
 import api.GetJsonAll;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.json.JsonArray;
 
 @Stateless
-public class UpdateData {
+public class UpdateSaveDate {
 
     @Inject
     private GetStation getStation;

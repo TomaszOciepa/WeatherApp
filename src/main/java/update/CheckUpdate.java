@@ -1,6 +1,7 @@
-package data;
+package update;
 
 import api.GetCurrentJsonDate;
+import data.GetLastUpdateDate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
