@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-average-temperature" data-toggle="pill" href="#v-pills-average-temperature-tab" role="tab" aria-controls="v-pills-average-temperature-tab" aria-selected="true">average temperature for Poland</a>
+            <a class="nav-link active" id="v-pills-average-temperature" data-toggle="pill" href="#v-pills-average-temperature-tab" role="tab" aria-controls="v-pills-average-temperature-tab" aria-selected="true">Average temperature for Poland</a>
             <a class="nav-link" id="v-pills-max-min-temp" data-toggle="pill" href="#v-pills-max-min-temp-tab" role="tab" aria-controls="v-pills-max-min-temp-tab" aria-selected="false">Max and Min temperature</a>
             <a class="nav-link" id="v-pills-average-pressure" data-toggle="pill" href="#v-pills-average-pressure-tab" role="tab" aria-controls="v-pills-average-pressure-tab" aria-selected="false">Average pressure for Poland</a>
             <a class="nav-link" id="v-pills-average-wind-speed" data-toggle="pill" href="#v-pills-average-wind-speed-tab" role="tab" aria-controls="v-pills-average-wind-speed-tab" aria-selected="false">Average wind speed for Poland</a>
@@ -19,8 +19,8 @@
         </div>
     </div>
     <div class="col-9">
-        <div class="tab-content" id="v-pills-average-temperature-tab">
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-average-temperature">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-average-temperature-tab" role="tabpanel" aria-labelledby="v-pills-average-temperature">
                 <h2>Average temperature for poland</h2>
                 <p>${average?c} &#x2103</p>
             </div>
