@@ -159,4 +159,14 @@ public class StationDao {
         return (List<Long>) query.getResultList();
     }
 
+    public List<Long> getSumWindSpeedForPoland(){
+        final  Query query = entityManager.createQuery("SELECT SUM(s.stationWindSpeed) FROM Station s");
+        return (List<Long>) query.getResultList();
+    }
+
+    public List<Long> getCountWindSpeedForPoland(){
+        final Query query = entityManager.createQuery("SELECT COUNT(s.stationWindSpeed) FROM Station s");
+        return (List<Long>) query.getResultList();
+    }
+
 }
