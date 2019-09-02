@@ -3,7 +3,6 @@ package update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.*;
@@ -24,7 +23,7 @@ public class UpdateDate {
 
     @PostConstruct
     public void initialize() {
-        timerService.createTimer(0, 60000, "Every four second timer with no delay");
+        timerService.createTimer(60000, 3600000, "Every one hour timer with 1 min delay");
     }
 
     @Timeout

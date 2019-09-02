@@ -1,6 +1,6 @@
 package servlet.historicalWeather;
 
-import data.GetAverageTempMonthForCity;
+import data.Temp.GetAverageTempMonthForCity;
 import data.GetMonthNumber;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;

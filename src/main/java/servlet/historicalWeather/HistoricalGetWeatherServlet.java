@@ -1,8 +1,8 @@
 package servlet.historicalWeather;
 
-import data.GetAverageTempForCity;
-import data.GetMaxTempForCity;
-import data.GetMinTempForCity;
+import data.Temp.GetAverageTempForCity;
+import data.Temp.GetMaxTempForCity;
+import data.Temp.GetMinTempForCity;
 import data.dao.StationDao;
 import data.model.Station;
 import freeMarker.TemplateProvider;

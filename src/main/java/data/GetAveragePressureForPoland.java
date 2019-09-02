@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import java.text.DecimalFormat;
 
 @Stateless
-public class GetAverageTempForPoland {
+public class GetAveragePressureForPoland {
 
     @Inject
     private StationDao stationDao;
@@ -15,10 +15,9 @@ public class GetAverageTempForPoland {
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
     public double get(){
-
-        double sumTemp = stationDao.getSumTempForPoland().get(0);
-        long count = stationDao.getCountTempForPoland().get(0);
-        double average = sumTemp / count;
+        double sumPressure =  stationDao.getSumPreassureForPoland().get(0);
+        long countPressure = stationDao.getCountPreassureForPoland().get(0);
+        double average = sumPressure / countPressure;
 
         return Double.parseDouble(df2.format(average));
     }

@@ -1,9 +1,10 @@
 package servlet.historicalWeather;
 
-import data.GetAverageTempForPoland;
+import data.GetAveragePressureForPoland;
+import data.Temp.GetAverageTempForPoland;
 import data.GetLastUpdateDate;
-import data.GetMaxTempForPoland;
-import data.GetMinTempForPoland;
+import data.Temp.GetMaxTempForPoland;
+import data.Temp.GetMinTempForPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -35,7 +36,8 @@ public class HistoricalDataServlet extends HttpServlet {
     private GetMinTempForPoland getMinTempForPoland;
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
-
+    @Inject
+    private GetAveragePressureForPoland getAveragePressureForPoland;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.addHeader("Content-Type", "text/html; charset=utf-8");
@@ -52,12 +54,15 @@ public class HistoricalDataServlet extends HttpServlet {
 
         String lastUpdate = getLastUpdateDate.getStringDate();
 
+        double averagePressure = getAveragePressureForPoland.get();
+
         model.put("average", average);
         model.put("maxTemp", maxTemp);
         model.put("maxTempCity", maxTempCity);
         model.put("minTemp", minTemp);
         model.put("minTempCity", minTempCity);
         model.put("lastUpdate", lastUpdate);
+        model.put("averagePressure", averagePressure);
 
         template = templateProvider.getTemplate(getServletContext(), "historical-data");
         try {

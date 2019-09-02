@@ -148,4 +148,15 @@ public class StationDao {
         query.setMaxResults(1);
         return (List<Station>) query.getResultList();
     }
+
+    public List<Double> getSumPreassureForPoland(){
+        final Query query = entityManager.createQuery("SELECT SUM(s.stationPressure) FROM Station s");
+        return (List<Double>) query.getResultList();
+    }
+
+    public List<Long> getCountPreassureForPoland(){
+        final  Query query = entityManager.createQuery("SELECT COUNT(s.stationPressure) FROM Station s");
+        return (List<Long>) query.getResultList();
+    }
+
 }
