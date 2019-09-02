@@ -169,4 +169,13 @@ public class StationDao {
         return (List<Long>) query.getResultList();
     }
 
+    public List<Double> getSumHumidityForPoland(){
+        final Query query = entityManager.createQuery("SELECT SUM(s.stationHumidity) FROM Station s");
+        return (List<Double>) query.getResultList();
+    }
+
+    public List<Long> getCountHumidityForPoland(){
+        final Query query = entityManager.createQuery("SELECT COUNT(s.stationHumidity) FROM Station s");
+        return (List<Long>) query.getResultList();
+    }
 }
