@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("/"))
+@WebServlet(urlPatterns = ("/WeatherApp"))
 public class IndexServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(IndexServlet.class);
@@ -26,7 +26,6 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         resp.addHeader("Content-Type", "text/html; charset=utf-8");
         PrintWriter out = resp.getWriter();
         Template template;
