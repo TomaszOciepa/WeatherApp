@@ -1,15 +1,59 @@
 <#include "header.ftlh">
 
 <div class="wrap">
-    <div class="container background-opacity">
-        <h1>Historical data weather in Poland</h1>
-        <p>Last data update: ${lastUpdate}</p>
+    <div class="container">
 
-        <a class="btn btn-primary btn-lg" href="historical-select-city" role="button">Select City</a>
-        <br>
-        <br>
-        <br>
-        <br>
+        <div class="jumbotron jumbotron-color">
+            <div class="row">
+                <div class="col-sm">
+                    <h1 class="display-4"><a class="link-main" href="/WeatherApp">Pogodna apka :)</a></h1>
+                </div>
+                <div class="col-sm">
+                    <form method="get" action="historical-get-weather">
+                        <div class="form-group">
+                            <select name="station" class="form-control" id="Select1" required>
+                                <option>wybierz miasto</option>
+                                <#list stationsName as n>
+                                    <option>${n}</option>
+                                </#list>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary button-green">Dalej</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+
+
+            <div class="row">
+                <div class="col-sm">
+                    <h2>Dane pogodowe dla Polski</h2>
+                    <p>Stan na: <b>${lastUpdate}</b></p>
+                </div>
+            </div>
+
+            <div class="poland-main-data">
+                <div class="row">
+                    <div class="col-sm border-right">
+                        <p>Temperatura max: <b>${maxTemp?c} &#x2103 ${maxTempCity}</b></p>
+                        <p>Wiatr: </p>
+                        <p>Suma opadu:</p>
+                        <p>Wilgotność:</p>
+                        <p>Ciśnienie:</p>
+                    </div>
+                    <div class="col-sm">
+                        <p>Temperatura min: <b>${minTemp?c} &#x2103 ${minTempCity}</b></p>
+                        <p>Wiatr: </p>
+                        <p>Suma opadu:</p>
+                        <p>Wilgotność:</p>
+                        <p>Ciśnienie:</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
         <div class="row">
             <div class="col-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">

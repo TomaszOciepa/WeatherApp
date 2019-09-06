@@ -3,7 +3,8 @@
     <div class="container">
 
         <div class="jumbotron jumbotron-color">
-            <h1 class="display-4"><a class="link-main" href="/WeatherApp">Pogodowa apka :)</a></h1>
+            <p><a class="link-main" href="/WeatherApp">Pogodna Apka :)</a></p>
+            <h1 class="display-4">Dane publiczne imgw</h1>
             <hr>
             <div class="row">
                 <div class="col-sm">
@@ -11,7 +12,7 @@
                     <p>${localDate}  ${cityHour}:00</p>
                 </div>
                 <div class="col-sm">
-                    <a class="btn btn-primary btn-lg button-green" href="select-station" role="button">Wybierz miasto</a>
+                    <a class="btn btn-primary btn-lg button-green" href="select-station" role="button">inne miasto</a>
                 </div>
             </div>
             <div class="weather-info">

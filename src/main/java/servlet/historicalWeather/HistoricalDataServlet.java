@@ -7,6 +7,7 @@ import data.Temp.GetAverageTempForPoland;
 import data.GetLastUpdateDate;
 import data.Temp.GetMaxTempForPoland;
 import data.Temp.GetMinTempForPoland;
+import data.model.GetNameStations;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(urlPatterns = ("historical-data"))
@@ -44,6 +46,8 @@ public class HistoricalDataServlet extends HttpServlet {
     private GetAverageWindSpeedForPoland getAverageWindSpeedForPoland;
     @Inject
     private GetAverageHumidityForPoland getAverageHumidityForPoland;
+    @Inject
+    GetNameStations getNameStations;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,6 +68,9 @@ public class HistoricalDataServlet extends HttpServlet {
         double averagePressure = getAveragePressureForPoland.get();
         long averageWindSpeed = getAverageWindSpeedForPoland.get();
         double averageHumidity = getAverageHumidityForPoland.get();
+        List<String> stationsName = getNameStations.get();
+
+        model.put("stationsName", stationsName);
 
         model.put("average", average);
         model.put("maxTemp", maxTemp);

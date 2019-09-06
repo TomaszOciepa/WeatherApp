@@ -34,3 +34,17 @@
     color: #ffffff;
     text-decoration: none;
 }
+
+.link-imgw:link{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.link-imgw:hover{
+    color: #f2f2f2;
+}
+
+.poland-main-data{
+    color: #f2f2f2;
+    font-size: 18px;
+}
