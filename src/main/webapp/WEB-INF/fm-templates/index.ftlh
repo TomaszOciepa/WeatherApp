@@ -2,13 +2,13 @@
 
 <div class="wrap">
     <div class="container">
-        <div class="jumbotron background-opacity">
-            <h1 class="display-4">Weather service</h1>
-            <p class="lead">The application checks the current weather. You can also check historical data in Poland</p>
+        <div class="jumbotron jumbotron-color">
+            <h1 class="display-4">Pogodowa apka :)</h1>
+            <p class="lead">Aplikacja umożliwia sprawdzenie obecnych oraz historycznych danych pogodowych dla wybranych miast w Polsce.</p>
             <hr class="my-4">
-            <p>We use data https://danepubliczne.imgw.pl/</p>
-            <a class="btn btn-primary btn-lg" href="select-station" role="button">Check current weather</a>
-            <a class="btn btn-primary btn-lg" href="historical-data" role="button">Check historical data weather</a>
+            <p>Używamy danych z https://danepubliczne.imgw.pl/</p>
+            <a class="btn btn-primary btn-lg button-green" href="select-station" role="button">Obecna prognoza</a>
+            <a class="btn btn-primary btn-lg button-green" href="historical-data" role="button">Historyczna prognoza</a>
         </div>
     </div>
 </div>

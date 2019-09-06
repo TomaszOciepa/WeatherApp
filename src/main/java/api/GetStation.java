@@ -1,6 +1,6 @@
 package api;
 
-import convert.DataConverter;
+import convert.DateConverter;
 import data.model.Station;
 
 import javax.ejb.Stateless;
@@ -17,7 +17,7 @@ public class GetStation {
     @Inject
     private GetJsonStation getJsonStation;
     @Inject
-    private DataConverter dataConverter;
+    private DateConverter dateConverter;
 
     public Station get(int id) {
 
@@ -29,7 +29,7 @@ public class GetStation {
         String name_station = checkJsonIsNull.checkJson("stacja", objectJson);
 
         String dateStr = checkJsonIsNull.checkJson("data_pomiaru", objectJson);
-        LocalDate date = dataConverter.ChangeStringToLocalData(dateStr);
+        LocalDate date = dateConverter.changeStringToLocalData(dateStr);
 
         int hour = Integer.parseInt(checkJsonIsNull.checkJson("godzina_pomiaru", objectJson));
         LocalTime time = LocalTime.of(hour, 0);

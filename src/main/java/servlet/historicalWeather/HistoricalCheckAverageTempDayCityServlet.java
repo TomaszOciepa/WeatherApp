@@ -1,6 +1,6 @@
 package servlet.historicalWeather;
 
-import convert.DataConverter;
+import convert.DateConverter;
 import data.Temp.GetAverageTempDayForCity;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
@@ -28,7 +28,7 @@ public class HistoricalCheckAverageTempDayCityServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private DataConverter dataConverter;
+    private DateConverter dateConverter;
     @Inject
     private GetAverageTempDayForCity getAverageTempDayForCity;
 
@@ -42,7 +42,7 @@ public class HistoricalCheckAverageTempDayCityServlet extends HttpServlet {
 
         String station = String.valueOf(session.getAttribute("station"));
         String day = req.getParameter("day");
-        LocalDate date = dataConverter.ChangeStringToLocalData(day);
+        LocalDate date = dateConverter.changeStringToLocalData(day);
 
         double average = getAverageTempDayForCity.get(date, station);
 

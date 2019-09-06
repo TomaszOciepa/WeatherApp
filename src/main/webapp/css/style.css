@@ -2,7 +2,7 @@
 .wrap{
     min-height: 1000px;
     background-color: #adb5bd;
-    background-image: url("../img/background.jpg");
+    background-image: url("../img/weather-app.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -11,7 +11,26 @@
 
 }
 
-.background-opacity{
-    background-color: rgba(20, 48, 39, 0.9);
-    color: snow;
+.jumbotron-color{
+    background-color: #87CEE8;
+    color: #ffffff;
+}
+
+.button-green {
+    background-color: #4C7F04 ;
+    border-color: #4C7F04;
+}
+
+.button-green:hover {
+    background-color: #7EC40E;
+    border-color: #7EC40E;
+}
+
+.weather-info{
+    color: #f2f2f2;
+    font-size: 25px;
+}
+.link-main:link{
+    color: #ffffff;
+    text-decoration: none;
 }

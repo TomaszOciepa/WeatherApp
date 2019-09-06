@@ -3,6 +3,7 @@ package servlet.curentWeather;
 import api.FindStation;
 
 import api.GetStation;
+import convert.DateConverter;
 import data.model.Station;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
@@ -18,10 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("get-weather"))
+@WebServlet(urlPatterns = ("show-weather"))
 public class ShowWeatherServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(ShowWeatherServlet.class);
@@ -31,6 +33,8 @@ public class ShowWeatherServlet extends HttpServlet {
     private FindStation findStation;
     @Inject
     private GetStation getStation;
+    @Inject
+    private DateConverter dateConverter;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,13 +48,12 @@ public class ShowWeatherServlet extends HttpServlet {
         int stationId = findStation.get(stationName);
 
         Station station = getStation.get(stationId);
+        LocalDate localDate = dateConverter.changeLocalDateTimeToLocalDate(station.getStationDateTime());
+
 
         Map<String, Object> model = new HashMap<>();
-        model.put("cityID", station.getStationNumber());
         model.put("cityName", station.getStationName());
-        model.put("cityYear", station.getStationDateTime().getYear());
-        model.put("cityMonth", station.getStationDateTime().getMonth());
-        model.put("cityDay", station.getStationDateTime().getDayOfMonth());
+        model.put("localDate", localDate);
         model.put("cityHour", station.getStationDateTime().getHour());
         model.put("cityTemperature", station.getStationTemperature());
         model.put("cityWindSpeed", station.getStationWindSpeed());

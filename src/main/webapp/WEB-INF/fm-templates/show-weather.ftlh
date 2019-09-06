@@ -1,10 +1,36 @@
-<h1>Weather for ${cityName}</h1>
-<p><b>Id station:</b> ${cityID?c}</p>
-<p><b>Date of measurement:</b> ${cityDay} ${cityMonth} ${cityYear?c}</p>
-<p><b>Time of measurement:</b> ${cityHour}:00</p>
-<p><b>Temperature: </b>${cityTemperature} &#x2103</p>
-<p><b>Wind speed: </b>${cityWindSpeed?c} m/s</p>
-<p><b>Wind direction: </b>${windDirection}</p>
-<p><b>Pressure: </b>${pressure?c}</p>
-<p><b>Relative humidity: </b>${humidity}</p>
-<p><b>Total Rainfall: </b>${totalRainfall}</p>
+<#include "header.ftlh">
+<div class="wrap">
+    <div class="container">
+
+        <div class="jumbotron jumbotron-color">
+            <h1 class="display-4"><a class="link-main" href="/WeatherApp">Pogodowa apka :)</a></h1>
+            <hr>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="title"><h2>${cityName}</h2></div>
+                    <p>${localDate}  ${cityHour}:00</p>
+                </div>
+                <div class="col-sm">
+                    <a class="btn btn-primary btn-lg button-green" href="select-station" role="button">Wybierz miasto</a>
+                </div>
+            </div>
+            <div class="weather-info">
+                <div class="row">
+                    <div class="col-sm border-right">
+                        <p>Temperatura: <b>${cityTemperature} &#x2103</b></p>
+                        <p>Ciśnienie: <b>${pressure?c} hPa</b></p>
+                        <p>Suma opadu: <b>${totalRainfall}</b></p>
+                    </div>
+                    <div class="col-sm">
+                        <p>Prędkość wiatru: <b>${cityWindSpeed?c} m/s</b></p>
+                        <p>Kierunek wiatru: <b>${windDirection}</b></p>
+                        <p>Wilgotność względna: <b>${humidity}</b></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<#include "footer.ftlh">

@@ -1,6 +1,6 @@
 package api;
 
-import convert.DataConverter;
+import convert.DateConverter;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,7 +17,7 @@ public class GetCurrentJsonDate {
     @Inject
     private GetJsonAll getJsonAll;
     @Inject
-    private DataConverter dataConverter;
+    private DateConverter dateConverter;
 
     public LocalDateTime get() {
         LocalDateTime localDateTime = findHighestDate();
@@ -48,7 +48,7 @@ public class GetCurrentJsonDate {
 
         for (int i = 0; i < jsonArray.size(); i++) {
             String dateStr = jsonArray.getJsonObject(i).getString("data_pomiaru");
-            LocalDate localDate = dataConverter.ChangeStringToLocalData(dateStr);
+            LocalDate localDate = dateConverter.changeStringToLocalData(dateStr);
 
             int time = Integer.parseInt(jsonArray.getJsonObject(i).getString("godzina_pomiaru"));
             LocalTime localTime = LocalTime.of(time, 0);
