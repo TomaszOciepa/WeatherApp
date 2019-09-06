@@ -5,8 +5,9 @@ import data.GetAveragePressureForPoland;
 import data.GetAverageWindSpeedForPoland;
 import data.Temp.GetAverageTempForPoland;
 import data.GetLastUpdateDate;
-import data.Temp.GetMaxTempForPoland;
-import data.Temp.GetMinTempForPoland;
+import data.Temp.GetMaxTempForPolandAllMeasurement;
+import data.Temp.GetMaxTempForPolandLastMeasurement;
+import data.Temp.GetMinTempForPolandAllMeasurement;
 import data.model.GetNameStations;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
@@ -35,9 +36,9 @@ public class HistoricalDataServlet extends HttpServlet {
     @Inject
     private GetAverageTempForPoland getAverageTempForPoland;
     @Inject
-    private GetMaxTempForPoland getMaxTempForPoland;
+    private GetMaxTempForPolandAllMeasurement getMaxTempForPolandAllMeasurement;
     @Inject
-    private GetMinTempForPoland getMinTempForPoland;
+    private GetMinTempForPolandAllMeasurement getMinTempForPolandAllMeasurement;
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
@@ -47,7 +48,9 @@ public class HistoricalDataServlet extends HttpServlet {
     @Inject
     private GetAverageHumidityForPoland getAverageHumidityForPoland;
     @Inject
-    GetNameStations getNameStations;
+    private GetNameStations getNameStations;
+    @Inject
+    private GetMaxTempForPolandLastMeasurement getMaxTempForPolandLastMeasurement;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -57,11 +60,11 @@ public class HistoricalDataServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
 
         double average = getAverageTempForPoland.get();
-        double maxTemp = getMaxTempForPoland.getMaxTemp();
-        String maxTempCity = getMaxTempForPoland.getCity();
+        double maxTemp = getMaxTempForPolandAllMeasurement.getMaxTemp();
+        String maxTempCity = getMaxTempForPolandAllMeasurement.getCity();
 
-        double minTemp = getMinTempForPoland.getMinTemp();
-        String minTempCity = getMinTempForPoland.getCity();
+        double minTemp = getMinTempForPolandAllMeasurement.getMinTemp();
+        String minTempCity = getMinTempForPolandAllMeasurement.getCity();
 
         String lastUpdate = getLastUpdateDate.getStringDate();
 
@@ -69,9 +72,12 @@ public class HistoricalDataServlet extends HttpServlet {
         long averageWindSpeed = getAverageWindSpeedForPoland.get();
         double averageHumidity = getAverageHumidityForPoland.get();
         List<String> stationsName = getNameStations.get();
+        double maxTempForPolandLastUpdate = getMaxTempForPolandLastMeasurement.get();
+        String maxTempForPolandLastUpdateCity = getMaxTempForPolandLastMeasurement.getCity();
 
         model.put("stationsName", stationsName);
-
+        model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);
+        model.put("maxTempForPolandLastUpdateCity", maxTempForPolandLastUpdateCity);
         model.put("average", average);
         model.put("maxTemp", maxTemp);
         model.put("maxTempCity", maxTempCity);

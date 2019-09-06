@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import java.text.DecimalFormat;
 
 @Stateless
-public class GetMinTempForPoland {
+public class GetMinTempForPolandAllMeasurement {
 
     @Inject
     private StationDao stationDao;
@@ -15,12 +15,12 @@ public class GetMinTempForPoland {
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
     public double getMinTemp(){
-        double minTemp = stationDao.getMinTempForPoland().get(0).getStationTemperature();
+        double minTemp = stationDao.getMinTempForPolandAllMeasurement().get(0).getStationTemperature();
         return Double.parseDouble(df2.format(minTemp));
     }
 
     public String getCity(){
-        String cityName = stationDao.getMinTempForPoland().get(0).getStationName();
+        String cityName = stationDao.getMinTempForPolandAllMeasurement().get(0).getStationName();
         return cityName;
     }
 

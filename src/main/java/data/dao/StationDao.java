@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -137,14 +138,21 @@ public class StationDao {
         return (List<Station>) query.getResultList();
     }
 
-    public List<Station> getMaxTempForPoland(){
+    public List<Station> getMaxTempForPolandAllMeasurement(){
         final Query query = entityManager.createQuery("SELECT s FROM Station s ORDER BY s.stationTemperature DESC ");
         query.setMaxResults(1);
         return (List<Station>) query.getResultList();
     }
 
-    public List<Station> getMinTempForPoland(){
+    public List<Station> getMinTempForPolandAllMeasurement(){
         final Query query = entityManager.createQuery("SELECT s FROM Station s ORDER BY s.stationTemperature ASC ");
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMaxTempForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationTemperature DESC");
+        query.setParameter("lastUpdate", lastUpdate);
         query.setMaxResults(1);
         return (List<Station>) query.getResultList();
     }

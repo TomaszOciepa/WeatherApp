@@ -35,7 +35,7 @@
             <div class="poland-main-data">
                 <div class="row">
                     <div class="col-sm border-right">
-                        <p>Temperatura max: <b>${maxTemp?c} &#x2103 ${maxTempCity}</b></p>
+                        <p>Temperatura max: <b>${maxTempForPolandLastUpdate?c} &#x2103 ${maxTempForPolandLastUpdateCity}</b></p>
                         <p>Wiatr: </p>
                         <p>Suma opadu:</p>
                         <p>Wilgotność:</p>
