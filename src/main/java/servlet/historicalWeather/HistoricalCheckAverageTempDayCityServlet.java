@@ -1,7 +1,7 @@
 package servlet.historicalWeather;
 
 import convert.DateConverter;
-import data.Temp.GetAverageTempDayForCity;
+import data.temp.GetAverageTempDayForCity;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

@@ -157,6 +157,69 @@ public class StationDao {
         return (List<Station>) query.getResultList();
     }
 
+    public List<Station> getMinTempForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationTemperature ASC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMaxWindForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationWindSpeed DESC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMinWindForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationWindSpeed ASC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMaxRainFallForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationTotalRainfall DESC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMinRainFallForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationTotalRainfall ASC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMaxHumidityForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationHumidity DESC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMinHumidityForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationHumidity ASC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMaxPressureForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationPressure DESC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getMinPressureForPolandLastMeasurement(LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationPressure ASC");
+        query.setParameter("lastUpdate", lastUpdate);
+        query.setMaxResults(1);
+        return (List<Station>) query.getResultList();
+    }
+
     public List<Double> getSumPreassureForPoland(){
         final Query query = entityManager.createQuery("SELECT SUM(s.stationPressure) FROM Station s");
         return (List<Double>) query.getResultList();

@@ -1,4 +1,4 @@
-package data.Temp;
+package data.temp;
 
 import data.GetLastUpdateDate;
 import data.dao.StationDao;
@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 @Stateless
-public class GetMaxTempForPolandLastMeasurement {
+public class GetMaxTempForPolandLastUpdate {
 
     @Inject
     private StationDao stationDao;
@@ -18,15 +18,10 @@ public class GetMaxTempForPolandLastMeasurement {
 
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
-    public double get(){
+    public double getTemp(){
         LocalDateTime lastUpdate = getLastUpdateDate.get();
         double maxTemp = stationDao.getMaxTempForPolandLastMeasurement(lastUpdate).get(0).getStationTemperature();
         return Double.parseDouble(df2.format(maxTemp));
     }
 
-    public String getCity(){
-        LocalDateTime lastUpdate = getLastUpdateDate.get();
-        String city = stationDao.getMaxTempForPolandLastMeasurement(lastUpdate).get(0).getStationName();
-        return city;
-    }
 }

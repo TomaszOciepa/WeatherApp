@@ -1,4 +1,4 @@
-package data.Temp;
+package data.temp;
 
 import data.dao.StationDao;
 import javax.ejb.Stateless;

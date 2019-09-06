@@ -3,12 +3,17 @@ package servlet.historicalWeather;
 import data.GetAverageHumidityForPoland;
 import data.GetAveragePressureForPoland;
 import data.GetAverageWindSpeedForPoland;
-import data.Temp.GetAverageTempForPoland;
+import data.humidity.GetMaxHumidityForPolandLastUpdate;
+import data.humidity.GetMinHumidityForPolandLastUpdate;
+import data.pressure.GetMaxPressureForPolandLastUpdate;
+import data.pressure.GetMinPressureForPolandLastUpdate;
+import data.rainfall.GetMaxRainFallForPolandLastUpdate;
+import data.rainfall.GetMinRainFallForPolandLastUpdate;
+import data.temp.*;
 import data.GetLastUpdateDate;
-import data.Temp.GetMaxTempForPolandAllMeasurement;
-import data.Temp.GetMaxTempForPolandLastMeasurement;
-import data.Temp.GetMinTempForPolandAllMeasurement;
 import data.model.GetNameStations;
+import data.wind.GetMinWindForPolandLastUpdate;
+import data.wind.GetMaxWindForPolandLastUpdate;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -23,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +57,25 @@ public class HistoricalDataServlet extends HttpServlet {
     @Inject
     private GetNameStations getNameStations;
     @Inject
-    private GetMaxTempForPolandLastMeasurement getMaxTempForPolandLastMeasurement;
+    private GetMaxTempForPolandLastUpdate getMaxTempForPolandLastUpdate;
+    @Inject
+    private GetMinTempForPolandLastUpdate getMinTempForPolandLastUpdate;
+    @Inject
+    private GetMaxWindForPolandLastUpdate getMaxWindForPolandLastUpdate;
+    @Inject
+    private GetMinWindForPolandLastUpdate getMinWindForPolandLastUpdate;
+    @Inject
+    private GetMaxRainFallForPolandLastUpdate getMaxRainFallForPolandLastUpdate;
+    @Inject
+    private GetMinRainFallForPolandLastUpdate getMinRainFallForPolandLastUpdate;
+    @Inject
+    private GetMaxHumidityForPolandLastUpdate getMaxHumidityForPolandLastUpdate;
+    @Inject
+    private GetMinHumidityForPolandLastUpdate getMinHumidityForPolandLastUpdate;
+    @Inject
+    private GetMaxPressureForPolandLastUpdate getMaxPressureForPolandLastUpdate;
+    @Inject
+    private GetMinPressureForPolandLastUpdate getMinPressureForPolandLastUpdate;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -66,24 +91,42 @@ public class HistoricalDataServlet extends HttpServlet {
         double minTemp = getMinTempForPolandAllMeasurement.getMinTemp();
         String minTempCity = getMinTempForPolandAllMeasurement.getCity();
 
-        String lastUpdate = getLastUpdateDate.getStringDate();
+        LocalDateTime lastUpdate =getLastUpdateDate.get();
+        String lastUpdateString = getLastUpdateDate.getStringDate();
 
         double averagePressure = getAveragePressureForPoland.get();
         long averageWindSpeed = getAverageWindSpeedForPoland.get();
         double averageHumidity = getAverageHumidityForPoland.get();
         List<String> stationsName = getNameStations.get();
-        double maxTempForPolandLastUpdate = getMaxTempForPolandLastMeasurement.get();
-        String maxTempForPolandLastUpdateCity = getMaxTempForPolandLastMeasurement.getCity();
+
+        double maxTempForPolandLastUpdate = getMaxTempForPolandLastUpdate.getTemp();
+        double minTempForPolandLastUpdate = getMinTempForPolandLastUpdate.getTemp(lastUpdate);
+        int maxWindForPolandLastUpdate = getMaxWindForPolandLastUpdate.get(lastUpdate);
+        int minWindForPolandLastUpdate = getMinWindForPolandLastUpdate.get(lastUpdate);
+        BigDecimal maxRainFallForPolandLastUpdate = getMaxRainFallForPolandLastUpdate.get(lastUpdate);
+        BigDecimal minRainFallForPolandLastUpdate = getMinRainFallForPolandLastUpdate.get(lastUpdate);
+        double maxHumidityForPolandLastUpdate = getMaxHumidityForPolandLastUpdate.get(lastUpdate);
+        double minHumidityForPolandLastUpdate = getMinHumidityForPolandLastUpdate.get(lastUpdate);
+        double maxPressureForPolandLastUpdate = getMaxPressureForPolandLastUpdate.get(lastUpdate);
+        double minPressureForPolandLastUpdate = getMinPressureForPolandLastUpdate.get(lastUpdate);
 
         model.put("stationsName", stationsName);
         model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);
-        model.put("maxTempForPolandLastUpdateCity", maxTempForPolandLastUpdateCity);
+        model.put("minTempForPolandLastUpdate", minTempForPolandLastUpdate);
+        model.put("maxWindForPolandLastUpdate", maxWindForPolandLastUpdate);
+        model.put("minWindForPolandLastUpdate", minWindForPolandLastUpdate);
+        model.put("maxRainFallForPolandLastUpdate", maxRainFallForPolandLastUpdate);
+        model.put("minRainFallForPolandLastUpdate", minRainFallForPolandLastUpdate);
+        model.put("maxHumidityForPolandLastUpdate", maxHumidityForPolandLastUpdate);
+        model.put("minHumidityForPolandLastUpdate", minHumidityForPolandLastUpdate);
+        model.put("maxPressureForPolandLastUpdate", maxPressureForPolandLastUpdate);
+        model.put("minPressureForPolandLastUpdate", minPressureForPolandLastUpdate);
         model.put("average", average);
         model.put("maxTemp", maxTemp);
         model.put("maxTempCity", maxTempCity);
         model.put("minTemp", minTemp);
         model.put("minTempCity", minTempCity);
-        model.put("lastUpdate", lastUpdate);
+        model.put("lastUpdateString", lastUpdateString);
         model.put("averagePressure", averagePressure);
         model.put("averageWindSpeed", averageWindSpeed);
         model.put("averageHumidity", averageHumidity);

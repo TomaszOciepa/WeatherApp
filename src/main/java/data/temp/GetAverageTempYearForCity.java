@@ -1,4 +1,4 @@
-package data.Temp;
+package data.temp;
 
 import data.dao.StationDao;
 
@@ -7,19 +7,18 @@ import javax.inject.Inject;
 import java.text.DecimalFormat;
 
 @Stateless
-public class GetAverageTempMonthForCity {
+public class GetAverageTempYearForCity {
 
     @Inject
     private StationDao stationDao;
-
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
-    public double get(int month, String city){
+    public double get(int year, String station) {
         double average;
 
         try {
-            double sum = stationDao.getSumTempMonthForCity(month, city).get(0);
-            long count = stationDao.getCountTempMonthForCity(month, city).get(0);
+            double sum = stationDao.getSumTempYearForCity(year, station).get(0);
+            long count = stationDao.getCountTempYearForCity(year, station).get(0);
             average = sum / count;
         }catch (NullPointerException e){
             average = 0;
