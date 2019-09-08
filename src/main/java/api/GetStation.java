@@ -26,6 +26,8 @@ public class GetStation {
         CheckJsonIsNull checkJsonIsNull = new CheckJsonIsNull();
 
         int id_station = Integer.parseInt(checkJsonIsNull.checkJson("id_stacji", objectJson));
+        String voivodshipCity = findVoivodshipCity(id_station);
+
         String name_station = checkJsonIsNull.checkJson("stacja", objectJson);
 
         String dateStr = checkJsonIsNull.checkJson("data_pomiaru", objectJson);
@@ -42,8 +44,18 @@ public class GetStation {
         double humidity = Double.parseDouble(checkJsonIsNull.checkJson("wilgotnosc_wzgledna", objectJson));
         BigDecimal totalRainfall = new BigDecimal(checkJsonIsNull.checkJson("suma_opadu", objectJson));
 
-        Station station = new Station(id_station, name_station, localDateTime, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall);
+        Station station = new Station(id_station, name_station, localDateTime, temperature, windSpeed, windDirection, pressure, humidity, totalRainfall, voivodshipCity);
 
         return station;
+    }
+
+    private String findVoivodshipCity(int id) {
+
+        if (id == 12295 || id == 12424 || id == 12250 || id == 12495 || id == 12300 || id == 12465 || id == 12566 || id == 12375 || id == 12530 || id == 12580 ||
+                id == 12155 || id == 12560 || id == 12570 || id == 12272 || id == 12330 || id == 12205) {
+            return "yes";
+        } else {
+            return "no";
+        }
     }
 }

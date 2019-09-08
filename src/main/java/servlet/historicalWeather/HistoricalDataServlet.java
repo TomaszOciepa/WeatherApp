@@ -1,16 +1,14 @@
 package servlet.historicalWeather;
 
-import data.GetAverageHumidityForPoland;
-import data.GetAveragePressureForPoland;
-import data.GetAverageWindSpeedForPoland;
+import data.*;
 import data.humidity.GetMaxHumidityForPolandLastUpdate;
 import data.humidity.GetMinHumidityForPolandLastUpdate;
+import data.model.Station;
 import data.pressure.GetMaxPressureForPolandLastUpdate;
 import data.pressure.GetMinPressureForPolandLastUpdate;
 import data.rainfall.GetMaxRainFallForPolandLastUpdate;
 import data.rainfall.GetMinRainFallForPolandLastUpdate;
 import data.temp.*;
-import data.GetLastUpdateDate;
 import data.model.GetNameStations;
 import data.wind.GetMinWindForPolandLastUpdate;
 import data.wind.GetMaxWindForPolandLastUpdate;
@@ -76,6 +74,8 @@ public class HistoricalDataServlet extends HttpServlet {
     private GetMaxPressureForPolandLastUpdate getMaxPressureForPolandLastUpdate;
     @Inject
     private GetMinPressureForPolandLastUpdate getMinPressureForPolandLastUpdate;
+    @Inject
+    private GetVoivodshipCity getVoivodshipCity;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -109,6 +109,8 @@ public class HistoricalDataServlet extends HttpServlet {
         double minHumidityForPolandLastUpdate = getMinHumidityForPolandLastUpdate.get(lastUpdate);
         double maxPressureForPolandLastUpdate = getMaxPressureForPolandLastUpdate.get(lastUpdate);
         double minPressureForPolandLastUpdate = getMinPressureForPolandLastUpdate.get(lastUpdate);
+        List<Station> voivodshipCityList =  getVoivodshipCity.get(lastUpdate);
+        System.out.println("miasta wojewódzkie "+ voivodshipCityList.size());
 
         model.put("stationsName", stationsName);
         model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);
@@ -130,6 +132,7 @@ public class HistoricalDataServlet extends HttpServlet {
         model.put("averagePressure", averagePressure);
         model.put("averageWindSpeed", averageWindSpeed);
         model.put("averageHumidity", averageHumidity);
+        model.put("voivodshipCityList", voivodshipCityList);
 
         template = templateProvider.getTemplate(getServletContext(), "historical-data");
         try {

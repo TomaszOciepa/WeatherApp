@@ -1,5 +1,5 @@
 <#include "header.ftlh">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <div class="wrap">
     <div class="container">
 
@@ -50,7 +50,14 @@
                     </div>
                 </div>
             </div>
-
+            <hr>
+            <div class="row">
+                <div class="col-sm">
+                    <h3>Temperatura dla 16 miast wojewódzkich</h3>
+                    <p>Stan na: <b>${lastUpdateString}</b></p>
+                </div>
+            </div>
+            <canvas id="myChart" width="400" height="200" aria-label="Hello ARIA World" role="img"></canvas>
 
         </div>
 
@@ -104,4 +111,42 @@
         </div>
     </div>
 </div>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: [<#list voivodshipCityList as v>
+                 '${v.stationName}',
+                        </#list>],
+    datasets: [{
+        label: 'Temperatury',
+        backgroundColor: 'rgb(76, 127, 4)',
+        borderColor: 'rgb(126, 196, 14)',
+        data: [<#list voivodshipCityList as v>
+            ${v.stationTemperature},
+            </#list>]
+    }]
+    },
+
+    // Configuration options go here
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, values) {
+                        return value + ' ℃ ';
+                    }
+                }
+            }]
+        }
+    }
+    })
+    ;
+
+</script>
 <#include "footer.ftlh">

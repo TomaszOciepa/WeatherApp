@@ -150,10 +150,16 @@ public class StationDao {
         return (List<Station>) query.getResultList();
     }
 
+    public List<Station> getVoivodshipCityTemp(LocalDateTime localDateTime){
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :localDateTime AND s.stationVoivodshipCity = :voivodshipCity ORDER BY s.stationTemperature DESC");
+        query.setParameter("localDateTime", localDateTime);
+        query.setParameter("voivodshipCity", "yes");
+        return (List<Station>) query.getResultList();
+    }
+
     public List<Station> getMaxTempForPolandLastMeasurement(LocalDateTime lastUpdate){
         final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationTemperature DESC");
         query.setParameter("lastUpdate", lastUpdate);
-        query.setMaxResults(1);
         return (List<Station>) query.getResultList();
     }
 
