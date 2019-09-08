@@ -20,12 +20,12 @@
                     <div class="col-sm border-right">
                         <p>Temperatura: <b>${cityTemperature} &#x2103</b></p>
                         <p>Ciśnienie: <b>${pressure?c} hPa</b></p>
-                        <p>Suma opadu: <b>${totalRainfall}</b></p>
+                        <p>Suma opadu: <b>${totalRainfall} mm</b></p>
                     </div>
                     <div class="col-sm">
                         <p>Prędkość wiatru: <b>${cityWindSpeed?c} m/s</b></p>
                         <p>Kierunek wiatru: <b>${windDirection}</b></p>
-                        <p>Wilgotność względna: <b>${humidity}</b></p>
+                        <p>Wilgotność względna: <b>${humidity} %</b></p>
                     </div>
                 </div>
             </div>
