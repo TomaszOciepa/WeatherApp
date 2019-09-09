@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -45,27 +44,23 @@ public class WeatherForCityPolandServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
         String stationName = req.getParameter("station");
         HttpSession session = req.getSession(true);
-        session.setAttribute("station", stationName);
+        session.setAttribute("stationName", stationName);
 
         List<Station> station = stationDao.getSelectedCity(stationName);
+        LocalDateTime lastUpdate = getLastUpdateDate.get();
 
-
-        LocalDateTime lastUpdate =getLastUpdateDate.get();
-        String lastUpdateString = getLastUpdateDate.getStringDate();
-
+        String lastUpdateDateTimeString = getLastUpdateDate.getStringDateTime();
+        String lastUpdateDateString = getLastUpdateDate.getStringDateDay();
         Station currentStationWeather = stationDao.getStationDataForHour(stationName, lastUpdate).get(0);
 
-        LocalDateTime startDay = LocalDateTime.of(lastUpdate.getYear(), lastUpdate.getMonthValue(), lastUpdate.getDayOfMonth(), 0, 0 );
-        LocalDateTime endDay = LocalDateTime.of(lastUpdate.getYear(), lastUpdate.getMonthValue(), lastUpdate.getDayOfMonth(), 23, 0 );
-
-
+        LocalDateTime startDay = LocalDateTime.of(lastUpdate.getYear(), lastUpdate.getMonthValue(), lastUpdate.getDayOfMonth(), 0, 0);
+        LocalDateTime endDay = LocalDateTime.of(lastUpdate.getYear(), lastUpdate.getMonthValue(), lastUpdate.getDayOfMonth(), 23, 0);
         List<Station> dayStationWeather = stationDao.getStationDataForDay(stationName, startDay, endDay);
 
-
-
-        model.put("currentStationWeather",currentStationWeather);
-        model.put("lastUpdateString",lastUpdateString);
-        model.put("dayStationWeather",dayStationWeather);
+        model.put("currentStationWeather", currentStationWeather);
+        model.put("lastUpdateDateTimeString", lastUpdateDateTimeString);
+        model.put("lastUpdateDateString", lastUpdateDateString);
+        model.put("dayStationWeather", dayStationWeather);
 
 
         model.put("station", station);

@@ -73,7 +73,7 @@ public class WeatherForPolandServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
 
         LocalDateTime lastUpdate =getLastUpdateDate.get();
-        String lastUpdateString = getLastUpdateDate.getStringDate();
+        String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
         List<String> stationsName = getNameStations.get();
 

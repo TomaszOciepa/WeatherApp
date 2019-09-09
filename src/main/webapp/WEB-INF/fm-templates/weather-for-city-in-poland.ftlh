@@ -5,15 +5,18 @@
 
 
         <div class="jumbotron jumbotron-color">
-            <h1 class="display-4"><a class="link-main" href="/WeatherApp">Pogodna Apka :)</a></h1>
+            <div class="row">
+                <div class="col-sm">
+                    <h1 class="display-4"><a class="link-main" href="/WeatherApp">Pogodna Apka :)</a></h1>
+                </div><div class="col-sm">
+                    <a class="btn btn-primary btn-lg button-green" href="weather-for-poland" role="button">inne miasto</a>
+                </div>
+            </div>
             <hr>
             <div class="row">
                 <div class="col-sm">
                     <div class="title"><h2>${currentStationWeather.stationName}</h2></div>
-                    <p>Stan na: <b>${lastUpdateString}</b></p>
-                </div>
-                <div class="col-sm">
-                    <a class="btn btn-primary btn-lg button-green" href="weather-for-poland" role="button">inne miasto</a>
+                    <p>Stan na: <b>${lastUpdateDateTimeString}</b></p>
                 </div>
             </div>
             <div class="weather-info">
@@ -31,6 +34,9 @@
                 </div>
             </div>
             <hr>
+
+           <h3>Wykres dla: <b>${lastUpdateDateString}</b></h3>
+            <p><a href="weather-for-city-in-poland-last-update-month">[Zobacz cały miesiąc]</a></p>
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="pills-temp-tab" data-toggle="pill" href="#pills-temp" role="tab" aria-controls="pills-temp" aria-selected="true">Temperatura</a>
@@ -65,10 +71,8 @@
                     <canvas id="pressureChart" width="400" height="200" aria-label="Hello ARIA World" role="img"></canvas>
                 </div>
             </div>
+
         </div>
-
-
-
     </div>
 </div>
 
