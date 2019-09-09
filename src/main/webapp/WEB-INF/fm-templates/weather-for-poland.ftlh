@@ -9,7 +9,7 @@
                     <h1 class="display-4"><a class="link-main" href="/WeatherApp">Pogodna apka :)</a></h1>
                 </div>
                 <div class="col-sm">
-                    <form method="get" action="historical-get-weather">
+                    <form method="get" action="weather-for-city-in-poland">
                         <div class="form-group">
                             <select name="station" class="form-control" id="Select1" required>
                                 <option>wybierz miasto</option>
@@ -53,7 +53,7 @@
             <hr>
             <div class="row">
                 <div class="col-sm">
-                    <h3>Temperatura dla 16 miast wojewódzkich</h3>
+                    <h3>Miasta wojewódzkie</h3>
                     <p>Stan na: <b>${lastUpdateString}</b></p>
                 </div>
             </div>

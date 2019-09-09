@@ -8,7 +8,7 @@
             <hr class="my-4">
             <p>Używamy danych z <a class="link-imgw" href="https://danepubliczne.imgw.pl/">danepubliczne.imgw.pl</a></p>
             <a class="btn btn-primary btn-lg button-green" href="select-station" role="button">Dane z IMGW</a>
-            <a class="btn btn-primary btn-lg button-green" href="historical-data" role="button">Pogodna apka :)</a>
+            <a class="btn btn-primary btn-lg button-green" href="weather-for-poland" role="button">Pogodna apka :)</a>
         </div>
     </div>
 </div>

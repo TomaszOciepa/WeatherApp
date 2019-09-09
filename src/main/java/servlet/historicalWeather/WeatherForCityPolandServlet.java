@@ -26,10 +26,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("historical-get-weather"))
-public class HistoricalGetWeatherServlet extends HttpServlet {
+@WebServlet(urlPatterns = ("weather-for-city-in-poland"))
+public class WeatherForCityPolandServlet extends HttpServlet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HistoricalGetWeatherServlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WeatherForCityPolandServlet.class);
     @Inject
     private TemplateProvider templateProvider;
     @Inject
@@ -76,13 +76,13 @@ public class HistoricalGetWeatherServlet extends HttpServlet {
         model.put("minTempDate", minTempDate);
         model.put("minTempHour", minTempHour);
 
-        template = templateProvider.getTemplate(getServletContext(), "historical-get-weather");
+        template = templateProvider.getTemplate(getServletContext(), "weather-for-city-in-poland");
         try {
-            LOG.info("Load template historical-get-weather");
+            LOG.info("Load template weather-for-city-in-poland");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-            LOG.warn("No load template historical-get-weather");
+            LOG.warn("No load template weather-for-city-in-poland");
         }
     }
 

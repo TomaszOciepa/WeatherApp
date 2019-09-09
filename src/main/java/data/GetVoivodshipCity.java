@@ -20,13 +20,4 @@ public class GetVoivodshipCity {
         return stationList;
     }
 
-
-//    public List<String> parseToString(List<Station> stationList){
-//        String city;
-//        String temp;
-//
-//        for (int i = 0; i < stationList.size(); i++) {
-//
-//        }
-//    }
 }
