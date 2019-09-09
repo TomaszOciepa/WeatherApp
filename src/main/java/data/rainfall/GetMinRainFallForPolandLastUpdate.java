@@ -13,7 +13,7 @@ public class GetMinRainFallForPolandLastUpdate {
     private StationDao stationDao;
 
     public BigDecimal get(LocalDateTime lastUpdate){
-        BigDecimal maxRainFall = stationDao.getMinRainFallForPolandLastMeasurement(lastUpdate).get(0).getStationTotalRainfall();
+        BigDecimal maxRainFall = stationDao.getMinRainFallForPolandLastUpdate(lastUpdate).get(0).getStationTotalRainfall();
         return maxRainFall;
     }
 }

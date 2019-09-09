@@ -15,7 +15,7 @@ public class GetMaxHumidityForPolandLastUpdate {
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
     public double get(LocalDateTime lastUpdate){
-        double max = stationDao.getMaxHumidityForPolandLastMeasurement(lastUpdate).get(0).getStationHumidity();
+        double max = stationDao.getMaxHumidityForPolandLastUpdate(lastUpdate).get(0).getStationHumidity();
         return Double.parseDouble(df2.format(max));
     }
 

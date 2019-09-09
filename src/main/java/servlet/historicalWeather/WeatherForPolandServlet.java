@@ -39,19 +39,7 @@ public class WeatherForPolandServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private GetAverageTempForPoland getAverageTempForPoland;
-    @Inject
-    private GetMaxTempForPolandAllMeasurement getMaxTempForPolandAllMeasurement;
-    @Inject
-    private GetMinTempForPolandAllMeasurement getMinTempForPolandAllMeasurement;
-    @Inject
     private GetLastUpdateDate getLastUpdateDate;
-    @Inject
-    private GetAveragePressureForPoland getAveragePressureForPoland;
-    @Inject
-    private GetAverageWindSpeedForPoland getAverageWindSpeedForPoland;
-    @Inject
-    private GetAverageHumidityForPoland getAverageHumidityForPoland;
     @Inject
     private GetNameStations getNameStations;
     @Inject
@@ -84,19 +72,9 @@ public class WeatherForPolandServlet extends HttpServlet {
         Template template;
         Map<String, Object> model = new HashMap<>();
 
-        double average = getAverageTempForPoland.get();
-        double maxTemp = getMaxTempForPolandAllMeasurement.getMaxTemp();
-        String maxTempCity = getMaxTempForPolandAllMeasurement.getCity();
-
-        double minTemp = getMinTempForPolandAllMeasurement.getMinTemp();
-        String minTempCity = getMinTempForPolandAllMeasurement.getCity();
-
         LocalDateTime lastUpdate =getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDate();
 
-        double averagePressure = getAveragePressureForPoland.get();
-        long averageWindSpeed = getAverageWindSpeedForPoland.get();
-        double averageHumidity = getAverageHumidityForPoland.get();
         List<String> stationsName = getNameStations.get();
 
         double maxTempForPolandLastUpdate = getMaxTempForPolandLastUpdate.getTemp();
@@ -123,15 +101,7 @@ public class WeatherForPolandServlet extends HttpServlet {
         model.put("minHumidityForPolandLastUpdate", minHumidityForPolandLastUpdate);
         model.put("maxPressureForPolandLastUpdate", maxPressureForPolandLastUpdate);
         model.put("minPressureForPolandLastUpdate", minPressureForPolandLastUpdate);
-        model.put("average", average);
-        model.put("maxTemp", maxTemp);
-        model.put("maxTempCity", maxTempCity);
-        model.put("minTemp", minTemp);
-        model.put("minTempCity", minTempCity);
         model.put("lastUpdateString", lastUpdateString);
-        model.put("averagePressure", averagePressure);
-        model.put("averageWindSpeed", averageWindSpeed);
-        model.put("averageHumidity", averageHumidity);
         model.put("voivodshipCityList", voivodshipCityList);
 
         template = templateProvider.getTemplate(getServletContext(), "weather-for-poland");

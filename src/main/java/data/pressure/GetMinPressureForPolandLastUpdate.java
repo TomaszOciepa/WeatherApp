@@ -15,7 +15,7 @@ public class GetMinPressureForPolandLastUpdate {
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
     public double get(LocalDateTime lastUpdate){
-        double min = stationDao.getMinPressureForPolandLastMeasurement(lastUpdate).get(0).getStationPressure();
+        double min = stationDao.getMinPressureForPolandLastUpdate(lastUpdate).get(0).getStationPressure();
         return Double.parseDouble(df2.format(min));
     }
 }

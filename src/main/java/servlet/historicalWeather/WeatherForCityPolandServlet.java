@@ -1,8 +1,6 @@
 package servlet.historicalWeather;
 
-import data.temp.GetAverageTempForCity;
-import data.temp.GetMaxTempForCity;
-import data.temp.GetMinTempForCity;
+import data.GetLastUpdateDate;
 import data.dao.StationDao;
 import data.model.Station;
 import freeMarker.TemplateProvider;
@@ -20,8 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +32,7 @@ public class WeatherForCityPolandServlet extends HttpServlet {
     @Inject
     private StationDao stationDao;
     @Inject
-    private GetAverageTempForCity getAverageTempForCity;
-    @Inject
-    private GetMaxTempForCity getMaxTempForCity;
-    @Inject
-    private GetMinTempForCity getMinTempForCity;
+    private GetLastUpdateDate getLastUpdateDate;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,27 +47,19 @@ public class WeatherForCityPolandServlet extends HttpServlet {
         session.setAttribute("station", stationName);
 
         List<Station> station = stationDao.getSelectedCity(stationName);
-        double average = getAverageTempForCity.get(stationName);
-        double maxTemp = getMaxTempForCity.getMaxTemp(stationName);
-        LocalDate maxTempDate = getMaxTempForCity.getDate(stationName);
-        LocalTime maxTempHour = getMaxTempForCity.getTime(stationName);
 
-        double minTemp = getMinTempForCity.getMinTemp(stationName);
-        LocalDate minTempDate = getMinTempForCity.getDate(stationName);
-        LocalTime minTempHour = getMinTempForCity.getHour(stationName);
+
+        LocalDateTime lastUpdate =getLastUpdateDate.get();
+        String lastUpdateString = getLastUpdateDate.getStringDate();
+
+        Station currentStationWeather = stationDao.getStationDataForDate(stationName, lastUpdate).get(0);
+
+        model.put("currentStationWeather",currentStationWeather);
+        model.put("lastUpdateString",lastUpdateString);
 
 
         model.put("station", station);
-        model.put("name", station.get(0).getStationName());
-        model.put("average", average);
 
-        model.put("maxTemp", maxTemp);
-        model.put("maxTempDate", maxTempDate);
-        model.put("maxTempHour", maxTempHour);
-
-        model.put("minTemp", minTemp);
-        model.put("minTempDate", minTempDate);
-        model.put("minTempHour", minTempHour);
 
         template = templateProvider.getTemplate(getServletContext(), "weather-for-city-in-poland");
         try {

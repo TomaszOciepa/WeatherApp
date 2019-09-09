@@ -15,7 +15,7 @@ public class GetMinTempForPolandLastUpdate {
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
     public double getTemp(LocalDateTime lastUpdate){
-        double maxTemp = stationDao.getMinTempForPolandLastMeasurement(lastUpdate).get(0).getStationTemperature();
+        double maxTemp = stationDao.getMinTempForPolandLastUpdate(lastUpdate).get(0).getStationTemperature();
         return Double.parseDouble(df2.format(maxTemp));
     }
 

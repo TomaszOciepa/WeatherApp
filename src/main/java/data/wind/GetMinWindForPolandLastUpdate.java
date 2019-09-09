@@ -14,7 +14,7 @@ public class GetMinWindForPolandLastUpdate {
 
     public int get(LocalDateTime lastUpdate) {
 
-        int maxWind = stationDao.getMinWindForPolandLastMeasurement(lastUpdate).get(0).getStationWindSpeed();
+        int maxWind = stationDao.getMinWindForPolandLastUpdate(lastUpdate).get(0).getStationWindSpeed();
         return maxWind;
     }
 

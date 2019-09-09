@@ -15,7 +15,7 @@ public class GetMinHumidityForPolandLastUpdate {
     private static DecimalFormat df2 = new DecimalFormat("#.#");
 
     public double get(LocalDateTime lastUpdate){
-        double min = stationDao.getMinHumidityForPolandLastMeasurement(lastUpdate).get(0).getStationHumidity();
+        double min = stationDao.getMinHumidityForPolandLastUpdate(lastUpdate).get(0).getStationHumidity();
         return Double.parseDouble(df2.format(min));
     }
 }
