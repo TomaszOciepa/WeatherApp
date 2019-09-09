@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -52,10 +53,19 @@ public class WeatherForCityPolandServlet extends HttpServlet {
         LocalDateTime lastUpdate =getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDate();
 
-        Station currentStationWeather = stationDao.getStationDataForDate(stationName, lastUpdate).get(0);
+        Station currentStationWeather = stationDao.getStationDataForHour(stationName, lastUpdate).get(0);
+
+        LocalDateTime startDay = LocalDateTime.of(lastUpdate.getYear(), lastUpdate.getMonthValue(), lastUpdate.getDayOfMonth(), 0, 0 );
+        LocalDateTime endDay = LocalDateTime.of(lastUpdate.getYear(), lastUpdate.getMonthValue(), lastUpdate.getDayOfMonth(), 23, 0 );
+
+
+        List<Station> dayStationWeather = stationDao.getStationDataForDay(stationName, startDay, endDay);
+
+
 
         model.put("currentStationWeather",currentStationWeather);
         model.put("lastUpdateString",lastUpdateString);
+        model.put("dayStationWeather",dayStationWeather);
 
 
         model.put("station", station);

@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -69,10 +70,18 @@ public class StationDao {
     }
 
 //    Station
-    public List<Station> getStationDataForDate(String stationName, LocalDateTime localDateTime){
+    public List<Station> getStationDataForHour(String stationName, LocalDateTime localDateTime){
         final Query query = entityManager.createQuery("SELECT s FROM  Station s WHERE s.stationName = :stationName AND s.stationDateTime = :localDateTime");
         query.setParameter("stationName", stationName);
         query.setParameter("localDateTime", localDateTime);
+        return (List<Station>) query.getResultList();
+    }
+
+    public List<Station> getStationDataForDay(String stationName, LocalDateTime startDay, LocalDateTime endDay){
+        final  Query query = entityManager.createQuery("SELECT s FROM Station s WHERE  s.stationName = :stationName AND s.stationDateTime BETWEEN :startDay AND :endDay ORDER BY s.stationDateTime ASC");
+        query.setParameter("stationName", stationName);
+        query.setParameter("startDay",  startDay);
+        query.setParameter("endDay",  endDay);
         return (List<Station>) query.getResultList();
     }
 
