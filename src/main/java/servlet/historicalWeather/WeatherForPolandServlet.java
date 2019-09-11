@@ -88,7 +88,6 @@ public class WeatherForPolandServlet extends HttpServlet {
         double maxPressureForPolandLastUpdate = getMaxPressureForPolandLastUpdate.get(lastUpdate);
         double minPressureForPolandLastUpdate = getMinPressureForPolandLastUpdate.get(lastUpdate);
         List<Station> voivodshipCityList =  getVoivodshipCity.get(lastUpdate);
-        System.out.println("miasta wojewódzkie "+ voivodshipCityList.size());
 
         model.put("stationsName", stationsName);
         model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);

@@ -23,7 +23,7 @@ public class UpdateDate {
 
     @PostConstruct
     public void initialize() {
-        timerService.createTimer(60000, 3600000, "Every one hour timer with 1 min delay");
+        timerService.createTimer(60000, 1800000, "Every half hour timer with 1 min delay");
     }
 
     @Timeout

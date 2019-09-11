@@ -45,6 +45,9 @@ public class Station {
     @Column(name = "STATION_VOIVODSHIP_CITY")
     private String stationVoivodshipCity;
 
+    @Column(name = "STATION_VOIVODSHIP")
+    private String stationVoivodship;
+
     public Station() {
     }
 
@@ -58,7 +61,7 @@ public class Station {
         this.stationName = stationName;
     }
 
-    public Station(int stationNumber, String stationName, LocalDateTime stationDateTime, double stationTemperature, int stationWindSpeed, int stationWindDirection, double stationPressure, double stationHumidity, BigDecimal stationTotalRainfall, String stationVoivodshipCity) {
+    public Station(int stationNumber, String stationName, LocalDateTime stationDateTime, double stationTemperature, int stationWindSpeed, int stationWindDirection, double stationPressure, double stationHumidity, BigDecimal stationTotalRainfall, String stationVoivodshipCity, String stationVoivodship) {
         this.stationNumber = stationNumber;
         this.stationName = stationName;
         this.stationDateTime = stationDateTime;
@@ -69,6 +72,7 @@ public class Station {
         this.stationHumidity = stationHumidity;
         this.stationTotalRainfall = stationTotalRainfall;
         this.stationVoivodshipCity = stationVoivodshipCity;
+        this.stationVoivodship = stationVoivodship;
     }
 
     public long getStationId() {
@@ -157,5 +161,13 @@ public class Station {
 
     public void setStationVoivodshipCity(String stationVoivodshipCity) {
         this.stationVoivodshipCity = stationVoivodshipCity;
+    }
+
+    public String getStationVoivodship() {
+        return stationVoivodship;
+    }
+
+    public void setStationVoivodship(String stationVoivodship) {
+        this.stationVoivodship = stationVoivodship;
     }
 }
