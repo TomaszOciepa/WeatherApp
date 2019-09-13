@@ -41,8 +41,6 @@ public class WeatherForPolandServlet extends HttpServlet {
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private GetNameStations getNameStations;
-    @Inject
     private GetMaxTempForPolandLastUpdate getMaxTempForPolandLastUpdate;
     @Inject
     private GetMinTempForPolandLastUpdate getMinTempForPolandLastUpdate;
@@ -62,8 +60,6 @@ public class WeatherForPolandServlet extends HttpServlet {
     private GetMaxPressureForPolandLastUpdate getMaxPressureForPolandLastUpdate;
     @Inject
     private GetMinPressureForPolandLastUpdate getMinPressureForPolandLastUpdate;
-    @Inject
-    private GetVoivodshipCity getVoivodshipCity;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -75,8 +71,6 @@ public class WeatherForPolandServlet extends HttpServlet {
         LocalDateTime lastUpdate =getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        List<String> stationsName = getNameStations.get();
-
         double maxTempForPolandLastUpdate = getMaxTempForPolandLastUpdate.getTemp();
         double minTempForPolandLastUpdate = getMinTempForPolandLastUpdate.getTemp(lastUpdate);
         int maxWindForPolandLastUpdate = getMaxWindForPolandLastUpdate.get(lastUpdate);
@@ -87,9 +81,8 @@ public class WeatherForPolandServlet extends HttpServlet {
         double minHumidityForPolandLastUpdate = getMinHumidityForPolandLastUpdate.get(lastUpdate);
         double maxPressureForPolandLastUpdate = getMaxPressureForPolandLastUpdate.get(lastUpdate);
         double minPressureForPolandLastUpdate = getMinPressureForPolandLastUpdate.get(lastUpdate);
-        List<Station> voivodshipCityList =  getVoivodshipCity.get(lastUpdate);
 
-        model.put("stationsName", stationsName);
+
         model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);
         model.put("minTempForPolandLastUpdate", minTempForPolandLastUpdate);
         model.put("maxWindForPolandLastUpdate", maxWindForPolandLastUpdate);
@@ -101,7 +94,7 @@ public class WeatherForPolandServlet extends HttpServlet {
         model.put("maxPressureForPolandLastUpdate", maxPressureForPolandLastUpdate);
         model.put("minPressureForPolandLastUpdate", minPressureForPolandLastUpdate);
         model.put("lastUpdateString", lastUpdateString);
-        model.put("voivodshipCityList", voivodshipCityList);
+
 
         template = templateProvider.getTemplate(getServletContext(), "weather-for-poland");
         try {

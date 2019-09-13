@@ -1,18 +1,9 @@
 <#include "header.ftlh">
+<#include "menu.ftlh">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <div class="wrap">
     <div class="container">
         <div class="jumbotron jumbotron-color">
-            <div class="row">
-                <div class="col-sm">
-                    <h1 class="display-4"><a class="link-main" href="/WeatherApp">Pogodna Apka :)</a></h1>
-                </div>
-                <div class="col-sm">
-                    <a class="btn btn-primary btn-lg button-green" href="weather-for-poland" role="button">inne
-                        miasto</a>
-                </div>
-            </div>
-            <hr>
             <div class="row">
                 <div class="col-sm">
                     <div class="title"><h2>${stationName}</h2></div>
