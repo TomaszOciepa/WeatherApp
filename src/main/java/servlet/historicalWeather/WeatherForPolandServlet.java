@@ -1,6 +1,7 @@
 package servlet.historicalWeather;
 
 import data.*;
+import data.dao.StationDao;
 import data.humidity.GetMaxHumidityForPolandLastUpdate;
 import data.humidity.GetMinHumidityForPolandLastUpdate;
 import data.model.Station;
@@ -9,7 +10,6 @@ import data.pressure.GetMinPressureForPolandLastUpdate;
 import data.rainfall.GetMaxRainFallForPolandLastUpdate;
 import data.rainfall.GetMinRainFallForPolandLastUpdate;
 import data.temp.*;
-import data.model.GetNameStations;
 import data.wind.GetMinWindForPolandLastUpdate;
 import data.wind.GetMaxWindForPolandLastUpdate;
 import freeMarker.TemplateProvider;
@@ -36,6 +36,8 @@ import java.util.Map;
 public class WeatherForPolandServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(WeatherForPolandServlet.class);
+    @Inject
+    private StationDao stationDao;
     @Inject
     private TemplateProvider templateProvider;
     @Inject
@@ -72,7 +74,11 @@ public class WeatherForPolandServlet extends HttpServlet {
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
         double maxTempForPolandLastUpdate = getMaxTempForPolandLastUpdate.getTemp();
+        List<Station> listCitiesWithMaxTemp = stationDao.getCitiesWithTemp(maxTempForPolandLastUpdate, lastUpdate);
+
         double minTempForPolandLastUpdate = getMinTempForPolandLastUpdate.getTemp(lastUpdate);
+        List<Station> listCitiesWithMinTemp = stationDao.getCitiesWithTemp(minTempForPolandLastUpdate, lastUpdate);
+
         int maxWindForPolandLastUpdate = getMaxWindForPolandLastUpdate.get(lastUpdate);
         int minWindForPolandLastUpdate = getMinWindForPolandLastUpdate.get(lastUpdate);
         BigDecimal maxRainFallForPolandLastUpdate = getMaxRainFallForPolandLastUpdate.get(lastUpdate);
@@ -84,7 +90,9 @@ public class WeatherForPolandServlet extends HttpServlet {
 
 
         model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);
+        model.put("listCitiesWithMaxTemp", listCitiesWithMaxTemp);
         model.put("minTempForPolandLastUpdate", minTempForPolandLastUpdate);
+        model.put("listCitiesWithMinTemp", listCitiesWithMinTemp);
         model.put("maxWindForPolandLastUpdate", maxWindForPolandLastUpdate);
         model.put("minWindForPolandLastUpdate", minWindForPolandLastUpdate);
         model.put("maxRainFallForPolandLastUpdate", maxRainFallForPolandLastUpdate);

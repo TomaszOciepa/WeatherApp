@@ -156,4 +156,11 @@ public class StationDao {
         return (List<Station>) query.getResultList();
     }
 
+    public List<Station> getCitiesWithTemp(double maxTemp, LocalDateTime lastUpdate){
+        final Query query = entityManager.createQuery("select s from Station s WHERE s.stationTemperature = :maxTemp AND s.stationDateTime = :lastUpdate");
+        query.setParameter("maxTemp", maxTemp);
+        query.setParameter("lastUpdate", lastUpdate);
+        return (List<Station>) query.getResultList();
+    }
+
 }
