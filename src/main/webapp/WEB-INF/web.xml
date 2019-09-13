@@ -6,8 +6,11 @@
     <data-source>
         <name>java:ds/phpmyadmin</name>
         <class-name>com.mysql.cj.jdbc.MysqlDataSource</class-name>
-        <url>jdbc:mysql://127.0.0.1:3306/phpmyadmin?useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Warsaw</url>
-        <user>phpmyadmin</user>
+<!--        local-->
+<!--        <url>jdbc:mysql://127.0.0.1:3306/phpmyadmin?useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Warsaw</url>-->
+<!--        docker-->
+        <url>jdbc:mysql://0.0.0.0:6603/phpmyadmin?useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Warsaw</url>
+        <user>root</user>
         <password>pass123</password>
     </data-source>
 
