@@ -6,7 +6,6 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import servlet.historicalWeather.WeatherForPolandServlet;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -23,7 +22,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = ("select-city"))
 public class SelectCityServlet extends HttpServlet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WeatherForPolandServlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SelectCityServlet.class);
     @Inject
     private TemplateProvider templateProvider;
 

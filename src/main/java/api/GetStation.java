@@ -54,9 +54,13 @@ public class GetStation {
 
         if (id == 12295 || id == 12424 || id == 12250 || id == 12495 || id == 12300 || id == 12465 || id == 12566 || id == 12375 || id == 12530 || id == 12580 ||
                 id == 12155 || id == 12560 || id == 12570 || id == 12272 || id == 12330 || id == 12205) {
-            return "yes";
+            return "vcity";
+        } else if (id == 12650 || id == 12510){
+            return "mountains";
+        } else if (id == 12001){
+            return "sea";
         } else {
-            return "no";
+            return "city";
         }
     }
 
