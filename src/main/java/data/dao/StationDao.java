@@ -183,9 +183,11 @@ public class StationDao {
     }
 
     public List<Station> getCitiesWithWind(int wind, LocalDateTime time){
-        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE  s.stationWindSpeed = :wind AND s.stationDateTime = :time");
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE  (s.stationVoivodshipCity = :vcity OR s.stationVoivodshipCity = :city) AND s.stationWindSpeed = :wind AND s.stationDateTime = :time");
         query.setParameter("wind", wind);
         query.setParameter("time", time);
+        query.setParameter("vcity", "vcity");
+        query.setParameter("city", "city");
         return (List<Station>) query.getResultList();
     }
 

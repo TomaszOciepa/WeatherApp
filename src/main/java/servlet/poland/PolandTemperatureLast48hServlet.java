@@ -1,10 +1,9 @@
 package servlet.poland;
 
 import data.GetLastUpdateDate;
+import data.GetMaxTempForLast48h;
 import data.dao.StationDao;
 import data.model.Station;
-import data.temp.GetMaxTempForPolandLastUpdate;
-import data.temp.GetMinTempForPolandLastUpdate;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -24,10 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("poland-temperature"))
-public class PolandTemperatureServlet extends HttpServlet {
-
-    private static final Logger LOG = LoggerFactory.getLogger(PolandTemperatureServlet.class);
+@WebServlet(urlPatterns = ("poland-temperature-last-48h"))
+public class PolandTemperatureLast48hServlet extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(PolandTemperatureLast48hServlet.class);
     @Inject
     private TemplateProvider templateProvider;
     @Inject
@@ -35,9 +33,7 @@ public class PolandTemperatureServlet extends HttpServlet {
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private GetMaxTempForPolandLastUpdate getMaxTempForPolandLastUpdate;
-    @Inject
-    private GetMinTempForPolandLastUpdate getMinTempForPolandLastUpdate;
+    private GetMaxTempForLast48h getMaxTempForLast48h;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,25 +45,20 @@ public class PolandTemperatureServlet extends HttpServlet {
         LocalDateTime lastUpdate = getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        double maxTempForPolandLastUpdate = getMaxTempForPolandLastUpdate.getTemp();
-        List<Station> listCitiesWithMaxTemp = stationDao.getCitiesWithTemp(maxTempForPolandLastUpdate, lastUpdate);
+        List<Station> maxTempForLast48h = getMaxTempForLast48h.get(lastUpdate);
 
-        double minTempForPolandLastUpdate = getMinTempForPolandLastUpdate.getTemp(lastUpdate);
-        List<Station> listCitiesWithMinTemp = stationDao.getCitiesWithTemp(minTempForPolandLastUpdate, lastUpdate);
 
         model.put("lastUpdateString", lastUpdateString);
-        model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);
-        model.put("listCitiesWithMaxTemp", listCitiesWithMaxTemp);
-        model.put("minTempForPolandLastUpdate", minTempForPolandLastUpdate);
-        model.put("listCitiesWithMinTemp", listCitiesWithMinTemp);
+        model.put("maxTempForLast48h", maxTempForLast48h);
 
-        template = templateProvider.getTemplate(getServletContext(), "poland-temperature");
+
+        template = templateProvider.getTemplate(getServletContext(), "poland-temperature-last-48h");
         try {
-            LOG.info("Load template poland-temperature");
+            LOG.info("Load template poland-temperature-last-48h");
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-            LOG.warn("No load template poland-temperature");
+            LOG.warn("No load template poland-temperature-last-48h");
         }
     }
 }

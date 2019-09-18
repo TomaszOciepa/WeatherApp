@@ -6,23 +6,59 @@
             <div class="row">
                 <div class="col-sm">
                     <h2>Temperatura powietrza w Polsce</h2>
-                    <p>Stan na: <b>${lastUpdateString}</b></p>
+                </div>
+                <div class="col-sm">
+                    ostatnia aktualizacja: <b>${lastUpdateString}</b> <br>
+                    <a href="poland-temperature-last-48h">zobacz ostatnie 48h</a> [ licząc od ostatniej aktualizacji ]
                 </div>
             </div>
-
+            <hr>
             <div class="poland-main-data">
                 <div class="row">
-                    <div class="col-sm border-right">
-                        <p>Temperatura max: <b>${maxTempForPolandLastUpdate?c} &#x2103</b> zmierzono w :</p>
-                        <#list listCitiesWithMaxTemp as n>
-                            <a href="weather-for-city-in-poland?station=${n.stationName}">${n.stationName}</a><br>
-                        </#list>
+                    <div class="col-sm">
+                        <table class="table table-bordered table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col" colspan="3">Temperatura maksymalna</th>
+                            </tr>
+                            <tr>
+                                <th>Data</th>
+                                <th>Miasto</th>
+                                <th>Temperatura</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list listCitiesWithMaxTemp as max>
+                             <tr>
+                                <td>${max.stationDateTime}</td>
+                                <td>${max.stationName}</td>
+                                <td>${max.stationTemperature?c} &#x2103</td>
+                            </tr>
+                            </#list>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="col-sm">
-                        <p>Temperatura min: <b>${minTempForPolandLastUpdate?c} &#x2103 </b>zmierzono w :</p>
-                        <#list listCitiesWithMinTemp as n>
-                            <a href="weather-for-city-in-poland?station=${n.stationName}">${n.stationName}</a><br>
-                        </#list>
+                        <table class="table table-bordered table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col" colspan="3">Temperatura minimalna</th>
+                            </tr>
+                            <tr>
+                                <th>Data</th>
+                                <th>Miasto</th>
+                                <th>Temperatura</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list listCitiesWithMinTemp as min>
+                                <tr>
+                                    <td>${min.stationDateTime}</td>
+                                    <td>${min.stationName}</td>
+                                    <td>${min.stationTemperature?c} &#x2103</td>
+                                </tr>
+                            </#list>
+                        </table>
                     </div>
                 </div>
             </div>
