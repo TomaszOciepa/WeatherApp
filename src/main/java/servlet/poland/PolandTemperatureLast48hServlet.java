@@ -1,9 +1,8 @@
 package servlet.poland;
 
 import data.GetLastUpdateDate;
-import data.GetMaxTempForLast48h;
-import data.dao.StationDao;
-import data.model.Station;
+import data.dao.StationMaxTempPolandDao;
+import data.model.StationMaxTempPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +29,9 @@ public class PolandTemperatureLast48hServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private StationDao stationDao;
+    private StationMaxTempPolandDao stationMaxTempPolandDao;
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
-    @Inject
-    private GetMaxTempForLast48h getMaxTempForLast48h;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,11 +43,10 @@ public class PolandTemperatureLast48hServlet extends HttpServlet {
         LocalDateTime lastUpdate = getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        List<Station> maxTempForLast48h = getMaxTempForLast48h.get(lastUpdate);
-
+        List<StationMaxTempPoland> stationMaxTempPolandList = getMaxTempPolands(lastUpdate);
 
         model.put("lastUpdateString", lastUpdateString);
-        model.put("maxTempForLast48h", maxTempForLast48h);
+        model.put("maxTempForLast48h", stationMaxTempPolandList);
 
 
         template = templateProvider.getTemplate(getServletContext(), "poland-temperature-last-48h");
@@ -60,5 +57,26 @@ public class PolandTemperatureLast48hServlet extends HttpServlet {
             e.printStackTrace();
             LOG.warn("No load template poland-temperature-last-48h");
         }
+    }
+
+    private List<StationMaxTempPoland> getMaxTempPolands(LocalDateTime lastUpdate) {
+        List<StationMaxTempPoland> stationMaxTempPolandList = new ArrayList<>();
+
+        for (int i = 0; i < 48; i++) {
+            if (stationMaxTempPolandDao.getMaxTempPolands(lastUpdate).size() != 0){
+                List<StationMaxTempPoland> list = stationMaxTempPolandDao.getMaxTempPolands(lastUpdate);
+                for (int j = 0; j < list.size(); j++) {
+                    stationMaxTempPolandList.add(list.get(j));
+                }
+            }else {
+                StationMaxTempPoland stationMaxTempPoland = new StationMaxTempPoland();
+                stationMaxTempPoland.setStationMaxTempPolandStationDateTime(lastUpdate);
+                stationMaxTempPoland.setStationMaxTempPolandStationName("brak pomiaru");
+                stationMaxTempPolandList.add(stationMaxTempPoland);
+            }
+
+            lastUpdate = lastUpdate.minusHours(1);
+        }
+        return stationMaxTempPolandList;
     }
 }

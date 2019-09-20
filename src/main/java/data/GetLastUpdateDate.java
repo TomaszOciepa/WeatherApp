@@ -20,7 +20,6 @@ public class GetLastUpdateDate {
     public LocalDateTime get(){
         List<Station> station = stationDao.lastUpdate();
         LocalDateTime date = station.get(0).getStationDateTime();
-
         return date;
     }
 

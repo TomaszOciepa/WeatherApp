@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -89,8 +88,10 @@ public class StationDao {
 
 //        Poland
     public List<Station> getMaxTempForPolandLastUpdate(LocalDateTime lastUpdate){
-        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE s.stationDateTime = :lastUpdate ORDER BY s.stationTemperature DESC");
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE (s.stationVoivodshipCity = :vcity OR s.stationVoivodshipCity = :city) AND s.stationDateTime = :lastUpdate ORDER BY s.stationTemperature DESC");
         query.setParameter("lastUpdate", lastUpdate);
+        query.setParameter("vcity", "vcity");
+        query.setParameter("city", "city");
         return (List<Station>) query.getResultList();
     }
 

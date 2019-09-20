@@ -2,8 +2,9 @@ package servlet.poland;
 
 import data.GetLastUpdateDate;
 import data.dao.StationDao;
+import data.dao.StationMaxTempPolandDao;
 import data.model.Station;
-import data.temp.GetMaxTempForPolandLastUpdate;
+import data.model.StationMaxTempPoland;
 import data.temp.GetMinTempForPolandLastUpdate;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
@@ -33,9 +34,9 @@ public class PolandTemperatureServlet extends HttpServlet {
     @Inject
     private StationDao stationDao;
     @Inject
-    private GetLastUpdateDate getLastUpdateDate;
+    private StationMaxTempPolandDao stationMaxTempPolandDao;
     @Inject
-    private GetMaxTempForPolandLastUpdate getMaxTempForPolandLastUpdate;
+    private GetLastUpdateDate getLastUpdateDate;
     @Inject
     private GetMinTempForPolandLastUpdate getMinTempForPolandLastUpdate;
 
@@ -49,16 +50,13 @@ public class PolandTemperatureServlet extends HttpServlet {
         LocalDateTime lastUpdate = getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        double maxTempForPolandLastUpdate = getMaxTempForPolandLastUpdate.getTemp();
-        List<Station> listCitiesWithMaxTemp = stationDao.getCitiesWithTemp(maxTempForPolandLastUpdate, lastUpdate);
+        List<StationMaxTempPoland> stationMaxTempPolandList = stationMaxTempPolandDao.getMaxTempPolands(lastUpdate);
 
         double minTempForPolandLastUpdate = getMinTempForPolandLastUpdate.getTemp(lastUpdate);
         List<Station> listCitiesWithMinTemp = stationDao.getCitiesWithTemp(minTempForPolandLastUpdate, lastUpdate);
 
         model.put("lastUpdateString", lastUpdateString);
-        model.put("maxTempForPolandLastUpdate", maxTempForPolandLastUpdate);
-        model.put("listCitiesWithMaxTemp", listCitiesWithMaxTemp);
-        model.put("minTempForPolandLastUpdate", minTempForPolandLastUpdate);
+        model.put("listCitiesWithMaxTemp", stationMaxTempPolandList);
         model.put("listCitiesWithMinTemp", listCitiesWithMinTemp);
 
         template = templateProvider.getTemplate(getServletContext(), "poland-temperature");

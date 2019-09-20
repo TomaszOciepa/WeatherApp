@@ -30,9 +30,9 @@
                             <tbody>
                             <#list listCitiesWithMaxTemp as max>
                              <tr>
-                                <td>${max.stationDateTime}</td>
-                                <td>${max.stationName}</td>
-                                <td>${max.stationTemperature?c} &#x2103</td>
+                                <td>${max.stationMaxTempPolandStationDateTime}</td>
+                                <td>${max.stationMaxTempPolandStationName}</td>
+                                <td>${max.stationMaxTempPolandStationTemperature?c} &#x2103</td>
                             </tr>
                             </#list>
                             </tbody>

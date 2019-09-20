@@ -1,7 +1,5 @@
 package data.model;
 
-import javax.ejb.Timeout;
-import javax.inject.Named;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
