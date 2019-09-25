@@ -1,10 +1,10 @@
 package servlet.poland;
 
 import data.GetLastUpdateDate;
-import data.dao.StationDao;
-import data.model.Station;
-import data.pressure.GetMaxPressureForPolandLastUpdate;
-import data.pressure.GetMinPressureForPolandLastUpdate;
+import data.dao.StationMaxPressurePolandDao;
+import data.dao.StationMinPressurePolandDao;
+import data.model.StationMaxPressurePoland;
+import data.model.StationMinPressurePoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -30,13 +30,11 @@ public class PolandPressureServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private StationDao stationDao;
-    @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private GetMaxPressureForPolandLastUpdate getMaxPressureForPolandLastUpdate;
+    private StationMaxPressurePolandDao stationMaxPressurePolandDao;
     @Inject
-    private GetMinPressureForPolandLastUpdate getMinPressureForPolandLastUpdate;
+    private StationMinPressurePolandDao stationMinPressurePolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,17 +46,12 @@ public class PolandPressureServlet extends HttpServlet {
         LocalDateTime lastUpdate =getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        double maxPressureForPolandLastUpdate = getMaxPressureForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMaxPressure = stationDao.getCitiesWithPressure(maxPressureForPolandLastUpdate, lastUpdate);
-
-        double minPressureForPolandLastUpdate = getMinPressureForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMinPressure = stationDao.getCitiesWithPressure(minPressureForPolandLastUpdate, lastUpdate);
+        List<StationMaxPressurePoland> stationMaxPressurePolandList = stationMaxPressurePolandDao.getMaxPressurePolands(lastUpdate);
+        List<StationMinPressurePoland> stationMinPressurePolandList = stationMinPressurePolandDao.getMinPressurePolands(lastUpdate);
 
         model.put("lastUpdateString", lastUpdateString);
-        model.put("maxPressureForPolandLastUpdate", maxPressureForPolandLastUpdate);
-        model.put("listCitiesWithMaxPressure", listCitiesWithMaxPressure);
-        model.put("minPressureForPolandLastUpdate", minPressureForPolandLastUpdate);
-        model.put("listCitiesWithMinPressure", listCitiesWithMinPressure);
+        model.put("listCitiesWithMaxPressure", stationMaxPressurePolandList);
+        model.put("listCitiesWithMinPressure", stationMinPressurePolandList);
 
         template = templateProvider.getTemplate(getServletContext(), "poland-pressure");
         try {

@@ -8,18 +8,18 @@
                     <h2>Ciśnienie w Polsce</h2>
                 </div>
                 <div class="col-sm">
-                    ostatnia aktualizacja: <b>${lastUpdateString}</b> <br>
-                    <a href="poland-pressure-last-48h">zobacz ostatnie 48h</a> [ licząc od ostatniej aktualizacji ]
+                    <a href="poland-pressure">ostatnia aktualizacja:</a> <b>${lastUpdateString}</b> <br>
                 </div>
             </div>
             <hr>
+            <h3>Tabela dla ostatnich 48h [ licząc od ostatniej aktualizacji ]</h3>
             <div class="poland-main-data">
                 <div class="row">
                     <div class="col-sm">
                         <table class="table table-bordered table-dark">
                             <thead>
                             <tr>
-                                <th scope="col" colspan="3">Ciśnienie maksymalne</th>
+                                <th scope="col" colspan="3">Ciśnineie maksymalne</th>
                             </tr>
                             <tr>
                                 <th>Data</th>
@@ -28,7 +28,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <#list listCitiesWithMaxPressure as max>
+                            <#list maxPressureForLast48h as max>
                                 <tr>
                                     <td>${max.stationMaxPressurePolandStationDateTime}</td>
                                     <td>${max.stationMaxPressurePolandStationName}</td>
@@ -38,6 +38,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <div class="col-sm">
                         <table class="table table-bordered table-dark">
                             <thead>
@@ -47,17 +48,18 @@
                             <tr>
                                 <th>Data</th>
                                 <th>Miasto</th>
-                                <th>Ciśnineie</th>
+                                <th>Ciśnienie</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <#list listCitiesWithMinPressure  as min>
+                            <#list minPressureForLast48h as min>
                                 <tr>
                                     <td>${min.stationMinPressurePolandStationDateTime}</td>
                                     <td>${min.stationMinPressurePolandStationName}</td>
                                     <td>${min.stationMinPressurePolandStationPressure?c} hPa</td>
                                 </tr>
                             </#list>
+                            </tbody>
                         </table>
                     </div>
                 </div>

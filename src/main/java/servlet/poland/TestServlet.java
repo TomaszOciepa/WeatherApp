@@ -34,7 +34,7 @@ public class TestServlet extends HttpServlet {
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private StationMinHumidityPolandDao stationMinHumidityPolandDao;
+    private StationMinPressurePolandDao stationMinPressurePolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,31 +50,31 @@ public class TestServlet extends HttpServlet {
         List<Station> stationsList = new ArrayList<>();
         LocalDateTime time = lastUpdate.minusHours(1);
 
-        for (int i = 0; i < 844 ; i++) {
+        for (int i = 0; i < 847 ; i++) {
             if (i == 0){
-               minTemp = stationDao.getMinHumidityForPolandLastUpdate(lastUpdate).get(0).getStationHumidity();
-               List<Station> list = stationDao.getCitiesWithHumidity(minTemp, lastUpdate);
+               minTemp = stationDao.getMinPressureForPolandLastUpdate(lastUpdate).get(0).getStationPressure();
+               List<Station> list = stationDao.getCitiesWithPressure(minTemp, lastUpdate);
 
                 for (int j = 0; j < list.size(); j++) {
-                   StationMinHumidityPoland stationMinHumidityPoland = new StationMinHumidityPoland();
-                   stationMinHumidityPoland.setStationMinHumidityPolandStationName(list.get(j).getStationName());
-                   stationMinHumidityPoland.setStationMinHumidityPolandStationNumber(list.get(j).getStationNumber());
-                   stationMinHumidityPoland.setStationMinHumidityPolandStationDateTime(list.get(j).getStationDateTime());
-                   stationMinHumidityPoland.setStationMinHumidityPolandStationHumidity(list.get(j).getStationHumidity());
-                   stationMinHumidityPolandDao.save(stationMinHumidityPoland);
+                   StationMinPressurePoland stationMinPressurePoland = new StationMinPressurePoland();
+                   stationMinPressurePoland.setStationMinPressurePolandStationName(list.get(j).getStationName());
+                   stationMinPressurePoland.setStationMinPressurePolandStationNumber(list.get(j).getStationNumber());
+                   stationMinPressurePoland.setStationMinPressurePolandStationDateTime(list.get(j).getStationDateTime());
+                   stationMinPressurePoland.setStationMinPressurePolandStationPressure(list.get(j).getStationPressure());
+                   stationMinPressurePolandDao.save(stationMinPressurePoland);
                 }
             }else {
-                if (stationDao.getMinHumidityForPolandLastUpdate(time).size() != 0){
-                    minTemp = stationDao.getMinHumidityForPolandLastUpdate(time).get(0).getStationHumidity();
-                    List<Station> list = stationDao.getCitiesWithHumidity(minTemp, time);
+                if (stationDao.getMinPressureForPolandLastUpdate(time).size() != 0){
+                    minTemp = stationDao.getMinPressureForPolandLastUpdate(time).get(0).getStationPressure();
+                    List<Station> list = stationDao.getCitiesWithPressure(minTemp, time);
 
                     for (int j = 0; j < list.size(); j++) {
-                        StationMinHumidityPoland stationMinHumidityPoland = new StationMinHumidityPoland();
-                        stationMinHumidityPoland.setStationMinHumidityPolandStationName(list.get(j).getStationName());
-                        stationMinHumidityPoland.setStationMinHumidityPolandStationNumber(list.get(j).getStationNumber());
-                        stationMinHumidityPoland.setStationMinHumidityPolandStationDateTime(list.get(j).getStationDateTime());
-                        stationMinHumidityPoland.setStationMinHumidityPolandStationHumidity(list.get(j).getStationHumidity());
-                        stationMinHumidityPolandDao.save(stationMinHumidityPoland);
+                        StationMinPressurePoland stationMinPressurePoland = new StationMinPressurePoland();
+                        stationMinPressurePoland.setStationMinPressurePolandStationName(list.get(j).getStationName());
+                        stationMinPressurePoland.setStationMinPressurePolandStationNumber(list.get(j).getStationNumber());
+                        stationMinPressurePoland.setStationMinPressurePolandStationDateTime(list.get(j).getStationDateTime());
+                        stationMinPressurePoland.setStationMinPressurePolandStationPressure(list.get(j).getStationPressure());
+                        stationMinPressurePolandDao.save(stationMinPressurePoland);
                     }
                 }
             }
