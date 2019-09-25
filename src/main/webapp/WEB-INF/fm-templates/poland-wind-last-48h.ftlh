@@ -8,11 +8,11 @@
                     <h2>Wiatr w Polsce</h2>
                 </div>
                 <div class="col-sm">
-                    ostatnia aktualizacja: <b>${lastUpdateString}</b> <br>
-                    <a href="poland-wind-last-48h">zobacz ostatnie 48h</a> [ licząc od ostatniej aktualizacji ] <br>
+                    <a href="poland-wind">ostatnia aktualizacja:</a> <b>${lastUpdateString}</b> <br>
                 </div>
             </div>
             <hr>
+            <h3>Tabela dla ostatnich 48h [ licząc od ostatniej aktualizacji ]</h3>
             <div class="poland-main-data">
                 <div class="row">
                     <div class="col-sm">
@@ -28,16 +28,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <#list listCitiesWithMaxWind as max>
+                            <#list maxWindForLast48h as max>
                                 <tr>
                                     <td>${max.stationMaxWindPolandStationDateTime}</td>
                                     <td>${max.stationMaxWindPolandStationName}</td>
-                                    <td>${max.stationMaxWindPolandStationWind}m/s</td>
+                                    <td>${max.stationMaxWindPolandStationWind} m/s</td>
                                 </tr>
                             </#list>
                             </tbody>
                         </table>
                     </div>
+
                     <div class="col-sm">
                         <table class="table table-bordered table-dark">
                             <thead>
@@ -51,21 +52,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <#list listCitiesWithMinWind as min>
+                            <#list minWindForLast48h as min>
                                 <tr>
                                     <td>${min.stationMinWindPolandStationDateTime}</td>
                                     <td>${min.stationMinWindPolandStationName}</td>
                                     <td>${min.stationMinWindPolandStationWind} m/s</td>
                                 </tr>
                             </#list>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
-
-
     </div>
 </div>
 <#include "footer.ftlh">

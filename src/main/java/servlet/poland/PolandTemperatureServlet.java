@@ -34,8 +34,6 @@ public class PolandTemperatureServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private StationDao stationDao;
-    @Inject
     private StationMaxTempPolandDao stationMaxTempPolandDao;
     @Inject
     private StationMinTempPolandDao stationMinTempPolandDao;
@@ -55,10 +53,6 @@ public class PolandTemperatureServlet extends HttpServlet {
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
         List<StationMaxTempPoland> stationMaxTempPolandList = stationMaxTempPolandDao.getMaxTempPolands(lastUpdate);
-
-//        double minTempForPolandLastUpdate = getMinTempForPolandLastUpdate.getTemp(lastUpdate);
-//        List<Station> listCitiesWithMinTemp = stationDao.getCitiesWithTemp(minTempForPolandLastUpdate, lastUpdate);
-
         List<StationMinTempPoland> stationMinTempPolandList = stationMinTempPolandDao.getMinTempPolands(lastUpdate);
 
 

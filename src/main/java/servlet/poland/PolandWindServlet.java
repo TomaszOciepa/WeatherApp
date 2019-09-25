@@ -1,10 +1,10 @@
 package servlet.poland;
 
 import data.GetLastUpdateDate;
-import data.dao.StationDao;
-import data.model.Station;
-import data.wind.GetMaxWindForPolandLastUpdate;
-import data.wind.GetMinWindForPolandLastUpdate;
+import data.dao.StationMaxWindPolandDao;
+import data.dao.StationMinWindPolandDao;
+import data.model.StationMaxWindPoland;
+import data.model.StationMinWindPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -31,13 +31,11 @@ public class PolandWindServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private StationDao stationDao;
-    @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private GetMaxWindForPolandLastUpdate getMaxWindForPolandLastUpdate;
+    private StationMaxWindPolandDao stationMaxWindPolandDao;
     @Inject
-    private GetMinWindForPolandLastUpdate getMinWindForPolandLastUpdate;
+    private StationMinWindPolandDao stationMinWindPolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,17 +47,12 @@ public class PolandWindServlet extends HttpServlet {
         LocalDateTime lastUpdate =getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        int maxWindForPolandLastUpdate = getMaxWindForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMaxWind = stationDao.getCitiesWithWind(maxWindForPolandLastUpdate, lastUpdate);
-
-        int minWindForPolandLastUpdate = getMinWindForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMinWind = stationDao.getCitiesWithWind(minWindForPolandLastUpdate, lastUpdate);
+        List<StationMaxWindPoland> stationMaxWindPolandList = stationMaxWindPolandDao.getMaxWindPoland(lastUpdate);
+        List<StationMinWindPoland> stationMinWindPolandList = stationMinWindPolandDao.getMinWindPoland(lastUpdate);
 
         model.put("lastUpdateString", lastUpdateString);
-        model.put("maxWindForPolandLastUpdate", maxWindForPolandLastUpdate);
-        model.put("listCitiesWithMaxWind", listCitiesWithMaxWind);
-        model.put("minWindForPolandLastUpdate", minWindForPolandLastUpdate);
-        model.put("listCitiesWithMinWind", listCitiesWithMinWind);
+        model.put("listCitiesWithMaxWind", stationMaxWindPolandList);
+        model.put("listCitiesWithMinWind", stationMinWindPolandList);
 
         template = templateProvider.getTemplate(getServletContext(), "poland-wind");
         try {

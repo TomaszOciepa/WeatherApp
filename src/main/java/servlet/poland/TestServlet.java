@@ -2,9 +2,13 @@ package servlet.poland;
 
 import data.GetLastUpdateDate;
 import data.dao.StationDao;
+import data.dao.StationMaxWindPolandDao;
 import data.dao.StationMinTempPolandDao;
+import data.dao.StationMinWindPolandDao;
 import data.model.Station;
+import data.model.StationMaxWindPoland;
 import data.model.StationMinTempPoland;
+import data.model.StationMinWindPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -36,7 +40,7 @@ public class TestServlet extends HttpServlet {
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private StationMinTempPolandDao stationMinTempPolandDao;
+    private StationMinWindPolandDao stationMinWindPolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,25 +52,38 @@ public class TestServlet extends HttpServlet {
         LocalDateTime lastUpdate = getLastUpdateDate.get();
 
 
-        double minTemp = 0;
-        List<Station> stationsList = new ArrayList<>();
+        int minTemp = 0;
         LocalDateTime time = lastUpdate.minusHours(1);
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 837; i++) {
             if (i == 0){
-               minTemp = stationDao.getMinTempForPolandLastUpdate(lastUpdate).get(0).getStationTemperature();
-               List<Station> list = stationDao.getCitiesWithTemp(minTemp, lastUpdate);
+
+               List<Station> list = stationDao.getCitiesWithWind(minTemp, lastUpdate);
 
                 for (int j = 0; j < list.size(); j++) {
-                    StationMinTempPoland stationMinTempPoland = new StationMinTempPoland();
-                    stationMinTempPoland.setStationMinTempPolandStationName(list.get(j).getStationName());
-                    stationMinTempPoland.setStationMinTempPolandStationNumber(list.get(j).getStationNumber());
-                    stationMinTempPoland.setStationMinTempPolandStationDateTime(list.get(j).getStationDateTime());
-                    stationMinTempPoland.setStationMinTempPolandStationTemperature(list.get(j).getStationTemperature());
-                    stationMinTempPolandDao.save(stationMinTempPoland);
+                    StationMinWindPoland stationMinWindPoland = new StationMinWindPoland();
+                    stationMinWindPoland.setStationMinWindPolandStationName(list.get(j).getStationName());
+                    stationMinWindPoland.setStationMinWindPolandStationNumber(list.get(j).getStationNumber());
+                    stationMinWindPoland.setStationMinWindPolandStationDateTime(list.get(j).getStationDateTime());
+                    stationMinWindPoland.setStationMinWindPolandStationWind(list.get(j).getStationWindSpeed());
+                    stationMinWindPolandDao.save(stationMinWindPoland);
+                }
+            }else {
+                if (stationDao.getMinTempForPolandLastUpdate(time).size() != 0){
+                    minTemp = stationDao.getMinWindForPolandLastUpdate(time).get(0).getStationWindSpeed();
+                    List<Station> list = stationDao.getCitiesWithWind(minTemp, time);
+
+                    for (int j = 0; j < list.size(); j++) {
+                        StationMinWindPoland stationMinWindPoland = new StationMinWindPoland();
+                        stationMinWindPoland.setStationMinWindPolandStationName(list.get(j).getStationName());
+                        stationMinWindPoland.setStationMinWindPolandStationNumber(list.get(j).getStationNumber());
+                        stationMinWindPoland.setStationMinWindPolandStationDateTime(list.get(j).getStationDateTime());
+                        stationMinWindPoland.setStationMinWindPolandStationWind(list.get(j).getStationWindSpeed());
+                        stationMinWindPolandDao.save(stationMinWindPoland);
+                    }
                 }
             }
-//            time = time.minusHours(1);
+            time = time.minusHours(1);
         }
 
 
