@@ -26,6 +26,10 @@ public class UpdateSaveDate {
     private UpdateSaveMaxWindPoland updateSaveMaxWindPoland;
     @Inject
     private UpdateSaveMinWindPoland updateSaveMinWindPoland;
+    @Inject
+    private UpdateSaveMaxRainPoland updateSaveMaxRainPoland;
+    @Inject
+    private UpdateSaveMinRainPoland updateSaveMinRainPoland;
 
     public void save() {
         JsonArray jsonObject = getJsonAll.getJson();
@@ -39,5 +43,8 @@ public class UpdateSaveDate {
         updateSaveMinTempPoland.save();
         updateSaveMaxWindPoland.save();
         updateSaveMinWindPoland.save();
+        updateSaveMaxRainPoland.save();
+        updateSaveMinRainPoland.save();
+
     }
 }

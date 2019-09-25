@@ -1,14 +1,8 @@
 package servlet.poland;
 
 import data.GetLastUpdateDate;
-import data.dao.StationDao;
-import data.dao.StationMaxWindPolandDao;
-import data.dao.StationMinTempPolandDao;
-import data.dao.StationMinWindPolandDao;
-import data.model.Station;
-import data.model.StationMaxWindPoland;
-import data.model.StationMinTempPoland;
-import data.model.StationMinWindPoland;
+import data.dao.*;
+import data.model.*;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -23,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +35,7 @@ public class TestServlet extends HttpServlet {
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private StationMinWindPolandDao stationMinWindPolandDao;
+    private StationMinRainPolandDao stationMinRainPolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,34 +47,35 @@ public class TestServlet extends HttpServlet {
         LocalDateTime lastUpdate = getLastUpdateDate.get();
 
 
-        int minTemp = 0;
+        BigDecimal minTemp;
+        List<Station> stationsList = new ArrayList<>();
         LocalDateTime time = lastUpdate.minusHours(1);
 
-        for (int i = 0; i < 837; i++) {
+        for (int i = 0; i < 843 ; i++) {
             if (i == 0){
-
-               List<Station> list = stationDao.getCitiesWithWind(minTemp, lastUpdate);
+               minTemp = stationDao.getMinRainFallForPolandLastUpdate(lastUpdate).get(0).getStationTotalRainfall();
+               List<Station> list = stationDao.getCitiesWithRainFall(minTemp, lastUpdate);
 
                 for (int j = 0; j < list.size(); j++) {
-                    StationMinWindPoland stationMinWindPoland = new StationMinWindPoland();
-                    stationMinWindPoland.setStationMinWindPolandStationName(list.get(j).getStationName());
-                    stationMinWindPoland.setStationMinWindPolandStationNumber(list.get(j).getStationNumber());
-                    stationMinWindPoland.setStationMinWindPolandStationDateTime(list.get(j).getStationDateTime());
-                    stationMinWindPoland.setStationMinWindPolandStationWind(list.get(j).getStationWindSpeed());
-                    stationMinWindPolandDao.save(stationMinWindPoland);
+                    StationMinRainPoland stationMinRainPoland = new StationMinRainPoland();
+                    stationMinRainPoland.setStationMinRainPolandStationName(list.get(j).getStationName());
+                    stationMinRainPoland.setStationMinRainPolandStationNumber(list.get(j).getStationNumber());
+                    stationMinRainPoland.setStationMinRainPolandStationDateTime(list.get(j).getStationDateTime());
+                    stationMinRainPoland.setStationMinRainPolandStationRain(list.get(j).getStationTotalRainfall());
+                    stationMinRainPolandDao.save(stationMinRainPoland);
                 }
             }else {
-                if (stationDao.getMinTempForPolandLastUpdate(time).size() != 0){
-                    minTemp = stationDao.getMinWindForPolandLastUpdate(time).get(0).getStationWindSpeed();
-                    List<Station> list = stationDao.getCitiesWithWind(minTemp, time);
+                if (stationDao.getMinRainFallForPolandLastUpdate(time).size() != 0){
+                    minTemp = stationDao.getMinRainFallForPolandLastUpdate(time).get(0).getStationTotalRainfall();
+                    List<Station> list = stationDao.getCitiesWithRainFall(minTemp, time);
 
                     for (int j = 0; j < list.size(); j++) {
-                        StationMinWindPoland stationMinWindPoland = new StationMinWindPoland();
-                        stationMinWindPoland.setStationMinWindPolandStationName(list.get(j).getStationName());
-                        stationMinWindPoland.setStationMinWindPolandStationNumber(list.get(j).getStationNumber());
-                        stationMinWindPoland.setStationMinWindPolandStationDateTime(list.get(j).getStationDateTime());
-                        stationMinWindPoland.setStationMinWindPolandStationWind(list.get(j).getStationWindSpeed());
-                        stationMinWindPolandDao.save(stationMinWindPoland);
+                        StationMinRainPoland stationMinRainPoland = new StationMinRainPoland();
+                        stationMinRainPoland.setStationMinRainPolandStationName(list.get(j).getStationName());
+                        stationMinRainPoland.setStationMinRainPolandStationNumber(list.get(j).getStationNumber());
+                        stationMinRainPoland.setStationMinRainPolandStationDateTime(list.get(j).getStationDateTime());
+                        stationMinRainPoland.setStationMinRainPolandStationRain(list.get(j).getStationTotalRainfall());
+                        stationMinRainPolandDao.save(stationMinRainPoland);
                     }
                 }
             }

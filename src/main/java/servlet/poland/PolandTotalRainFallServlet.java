@@ -1,10 +1,10 @@
 package servlet.poland;
 
 import data.GetLastUpdateDate;
-import data.dao.StationDao;
-import data.model.Station;
-import data.rainfall.GetMaxRainFallForPolandLastUpdate;
-import data.rainfall.GetMinRainFallForPolandLastUpdate;
+import data.dao.StationMaxRainPolandDao;
+import data.dao.StationMinRainPolandDao;
+import data.model.StationMaxRainPoland;
+import data.model.StationMinRainPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -32,13 +31,11 @@ public class PolandTotalRainFallServlet extends HttpServlet {
     @Inject
     private TemplateProvider templateProvider;
     @Inject
-    private StationDao stationDao;
-    @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private GetMaxRainFallForPolandLastUpdate getMaxRainFallForPolandLastUpdate;
+    private StationMaxRainPolandDao stationMaxRainPolandDao;
     @Inject
-    private GetMinRainFallForPolandLastUpdate getMinRainFallForPolandLastUpdate;
+    private StationMinRainPolandDao stationMinRainPolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,17 +47,12 @@ public class PolandTotalRainFallServlet extends HttpServlet {
         LocalDateTime lastUpdate =getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        BigDecimal maxRainFallForPolandLastUpdate = getMaxRainFallForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMaxRainFall = stationDao.getCitiesWithRainFall(maxRainFallForPolandLastUpdate, lastUpdate);
-
-        BigDecimal minRainFallForPolandLastUpdate = getMinRainFallForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMinRainFall = stationDao.getCitiesWithRainFall(minRainFallForPolandLastUpdate, lastUpdate);
+        List<StationMaxRainPoland> stationMaxRainPolandList = stationMaxRainPolandDao.getMaxRainPolands(lastUpdate);
+        List<StationMinRainPoland> stationMinRainPolandList = stationMinRainPolandDao.getMinRainPolands(lastUpdate);
 
         model.put("lastUpdateString", lastUpdateString);
-        model.put("maxRainFallForPolandLastUpdate", maxRainFallForPolandLastUpdate);
-        model.put("listCitiesWithMaxRainFall", listCitiesWithMaxRainFall);
-        model.put("minRainFallForPolandLastUpdate", minRainFallForPolandLastUpdate);
-        model.put("listCitiesWithMinRainFall", listCitiesWithMinRainFall);
+        model.put("listCitiesWithMaxRain", stationMaxRainPolandList);
+        model.put("listCitiesWithMinRain", stationMinRainPolandList);
 
         template = templateProvider.getTemplate(getServletContext(), "poland-total-rain-fall");
         try {
