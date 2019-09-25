@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class TestServlet extends HttpServlet {
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private StationMinRainPolandDao stationMinRainPolandDao;
+    private StationMinHumidityPolandDao stationMinHumidityPolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,35 +46,35 @@ public class TestServlet extends HttpServlet {
         LocalDateTime lastUpdate = getLastUpdateDate.get();
 
 
-        BigDecimal minTemp;
+        double minTemp;
         List<Station> stationsList = new ArrayList<>();
         LocalDateTime time = lastUpdate.minusHours(1);
 
-        for (int i = 0; i < 843 ; i++) {
+        for (int i = 0; i < 844 ; i++) {
             if (i == 0){
-               minTemp = stationDao.getMinRainFallForPolandLastUpdate(lastUpdate).get(0).getStationTotalRainfall();
-               List<Station> list = stationDao.getCitiesWithRainFall(minTemp, lastUpdate);
+               minTemp = stationDao.getMinHumidityForPolandLastUpdate(lastUpdate).get(0).getStationHumidity();
+               List<Station> list = stationDao.getCitiesWithHumidity(minTemp, lastUpdate);
 
                 for (int j = 0; j < list.size(); j++) {
-                    StationMinRainPoland stationMinRainPoland = new StationMinRainPoland();
-                    stationMinRainPoland.setStationMinRainPolandStationName(list.get(j).getStationName());
-                    stationMinRainPoland.setStationMinRainPolandStationNumber(list.get(j).getStationNumber());
-                    stationMinRainPoland.setStationMinRainPolandStationDateTime(list.get(j).getStationDateTime());
-                    stationMinRainPoland.setStationMinRainPolandStationRain(list.get(j).getStationTotalRainfall());
-                    stationMinRainPolandDao.save(stationMinRainPoland);
+                   StationMinHumidityPoland stationMinHumidityPoland = new StationMinHumidityPoland();
+                   stationMinHumidityPoland.setStationMinHumidityPolandStationName(list.get(j).getStationName());
+                   stationMinHumidityPoland.setStationMinHumidityPolandStationNumber(list.get(j).getStationNumber());
+                   stationMinHumidityPoland.setStationMinHumidityPolandStationDateTime(list.get(j).getStationDateTime());
+                   stationMinHumidityPoland.setStationMinHumidityPolandStationHumidity(list.get(j).getStationHumidity());
+                   stationMinHumidityPolandDao.save(stationMinHumidityPoland);
                 }
             }else {
-                if (stationDao.getMinRainFallForPolandLastUpdate(time).size() != 0){
-                    minTemp = stationDao.getMinRainFallForPolandLastUpdate(time).get(0).getStationTotalRainfall();
-                    List<Station> list = stationDao.getCitiesWithRainFall(minTemp, time);
+                if (stationDao.getMinHumidityForPolandLastUpdate(time).size() != 0){
+                    minTemp = stationDao.getMinHumidityForPolandLastUpdate(time).get(0).getStationHumidity();
+                    List<Station> list = stationDao.getCitiesWithHumidity(minTemp, time);
 
                     for (int j = 0; j < list.size(); j++) {
-                        StationMinRainPoland stationMinRainPoland = new StationMinRainPoland();
-                        stationMinRainPoland.setStationMinRainPolandStationName(list.get(j).getStationName());
-                        stationMinRainPoland.setStationMinRainPolandStationNumber(list.get(j).getStationNumber());
-                        stationMinRainPoland.setStationMinRainPolandStationDateTime(list.get(j).getStationDateTime());
-                        stationMinRainPoland.setStationMinRainPolandStationRain(list.get(j).getStationTotalRainfall());
-                        stationMinRainPolandDao.save(stationMinRainPoland);
+                        StationMinHumidityPoland stationMinHumidityPoland = new StationMinHumidityPoland();
+                        stationMinHumidityPoland.setStationMinHumidityPolandStationName(list.get(j).getStationName());
+                        stationMinHumidityPoland.setStationMinHumidityPolandStationNumber(list.get(j).getStationNumber());
+                        stationMinHumidityPoland.setStationMinHumidityPolandStationDateTime(list.get(j).getStationDateTime());
+                        stationMinHumidityPoland.setStationMinHumidityPolandStationHumidity(list.get(j).getStationHumidity());
+                        stationMinHumidityPolandDao.save(stationMinHumidityPoland);
                     }
                 }
             }

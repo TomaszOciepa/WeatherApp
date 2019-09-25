@@ -193,23 +193,29 @@ public class StationDao {
     }
 
     public List<Station> getCitiesWithRainFall(BigDecimal rain, LocalDateTime time){
-        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE  s.stationTotalRainfall = :rain AND s.stationDateTime = :time");
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE (s.stationVoivodshipCity = :vcity OR s.stationVoivodshipCity = :city) AND s.stationTotalRainfall = :rain AND s.stationDateTime = :time");
         query.setParameter("rain", rain);
         query.setParameter("time", time);
+        query.setParameter("vcity", "vcity");
+        query.setParameter("city", "city");
         return (List<Station>) query.getResultList();
     }
 
     public List<Station> getCitiesWithHumidity(double humidity, LocalDateTime time){
-        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE  s.stationHumidity = :humidity AND s.stationDateTime = :time");
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE (s.stationVoivodshipCity = :vcity OR s.stationVoivodshipCity = :city) AND s.stationHumidity = :humidity AND s.stationDateTime = :time");
         query.setParameter("humidity", humidity);
         query.setParameter("time", time);
+        query.setParameter("vcity", "vcity");
+        query.setParameter("city", "city");
         return (List<Station>) query.getResultList();
     }
 
     public List<Station> getCitiesWithPressure(double pressure, LocalDateTime time){
-        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE  s.stationPressure = :pressure AND s.stationDateTime = :time");
+        final Query query = entityManager.createQuery("SELECT s FROM Station s WHERE (s.stationVoivodshipCity = :vcity OR s.stationVoivodshipCity = :city) AND s.stationPressure = :pressure AND s.stationDateTime = :time");
         query.setParameter("pressure", pressure);
         query.setParameter("time", time);
+        query.setParameter("vcity", "vcity");
+        query.setParameter("city", "city");
         return (List<Station>) query.getResultList();
     }
 }

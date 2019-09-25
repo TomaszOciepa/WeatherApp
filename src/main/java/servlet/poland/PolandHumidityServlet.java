@@ -2,9 +2,10 @@ package servlet.poland;
 
 import data.GetLastUpdateDate;
 import data.dao.StationDao;
-import data.humidity.GetMaxHumidityForPolandLastUpdate;
-import data.humidity.GetMinHumidityForPolandLastUpdate;
-import data.model.Station;
+import data.dao.StationMaxHumidityPolandDao;
+import data.dao.StationMinHumidityPolandDao;
+import data.model.StationMaxHumidityPoland;
+import data.model.StationMinHumidityPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -34,9 +35,9 @@ public class PolandHumidityServlet extends HttpServlet {
     @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private GetMaxHumidityForPolandLastUpdate getMaxHumidityForPolandLastUpdate;
+    private StationMaxHumidityPolandDao stationMaxHumidityPolandDao;
     @Inject
-    private GetMinHumidityForPolandLastUpdate getMinHumidityForPolandLastUpdate;
+    private StationMinHumidityPolandDao stationMinHumidityPolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,17 +49,13 @@ public class PolandHumidityServlet extends HttpServlet {
         LocalDateTime lastUpdate =getLastUpdateDate.get();
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
-        double maxHumidityForPolandLastUpdate = getMaxHumidityForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMaxHumidity = stationDao.getCitiesWithHumidity(maxHumidityForPolandLastUpdate, lastUpdate);
 
-        double minHumidityForPolandLastUpdate = getMinHumidityForPolandLastUpdate.get(lastUpdate);
-        List<Station> listCitiesWithMinHumidity = stationDao.getCitiesWithHumidity(minHumidityForPolandLastUpdate, lastUpdate);
-
+        List<StationMaxHumidityPoland> stationMaxHumidityPolandList = stationMaxHumidityPolandDao.getMaxHumidityPolands(lastUpdate);
+        List<StationMinHumidityPoland> stationMinHumidityPolandList = stationMinHumidityPolandDao.getMinHumidityPolands(lastUpdate);
         model.put("lastUpdateString", lastUpdateString);
-        model.put("maxHumidityForPolandLastUpdate", maxHumidityForPolandLastUpdate);
-        model.put("listCitiesWithMaxHumidity", listCitiesWithMaxHumidity);
-        model.put("minHumidityForPolandLastUpdate", minHumidityForPolandLastUpdate);
-        model.put("listCitiesWithMinHumidity", listCitiesWithMinHumidity);
+        model.put("listCitiesWithMaxHumidity", stationMaxHumidityPolandList);
+        model.put("listCitiesWithMinHumidity", stationMinHumidityPolandList);
+
 
         template = templateProvider.getTemplate(getServletContext(), "poland-humidity");
         try {
