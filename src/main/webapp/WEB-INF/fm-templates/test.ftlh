@@ -1,0 +1,1 @@
+<h1>Test. Ładowanie min temp do bazy</h1>

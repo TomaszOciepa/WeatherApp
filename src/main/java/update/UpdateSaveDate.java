@@ -20,6 +20,8 @@ public class UpdateSaveDate {
     private GetJsonAll getJsonAll;
     @Inject
     private UpdateSaveMaxTempPoland updateSaveMaxTempPoland;
+    @Inject
+    private UpdateSaveMinTempPoland updateSaveMinTempPoland;
 
     public void save() {
         JsonArray jsonObject = getJsonAll.getJson();
@@ -30,5 +32,6 @@ public class UpdateSaveDate {
             stationDao.save(station);
         }
         updateSaveMaxTempPoland.save();
+        updateSaveMinTempPoland.save();
     }
 }

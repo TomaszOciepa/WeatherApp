@@ -38,6 +38,30 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="col-sm">
+                        <table class="table table-bordered table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col" colspan="3">Temperatura minimalna</th>
+                            </tr>
+                            <tr>
+                                <th>Data</th>
+                                <th>Miasto</th>
+                                <th>Temperatura</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list minTempForLast48h as min>
+                                <tr>
+                                    <td>${min.stationMinTempPolandStationDateTime}</td>
+                                    <td>${min.stationMinTempPolandStationName}</td>
+                                    <td>${min.stationMinTempPolandStationTemperature?c} &#x2103</td>
+                                </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,12 +2,9 @@ package servlet.poland;
 
 import data.GetLastUpdateDate;
 import data.dao.StationDao;
-import data.dao.StationMaxTempPolandDao;
 import data.dao.StationMinTempPolandDao;
 import data.model.Station;
-import data.model.StationMaxTempPoland;
 import data.model.StationMinTempPoland;
-import data.temp.GetMinTempForPolandLastUpdate;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -23,12 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = ("poland-temperature"))
-public class PolandTemperatureServlet extends HttpServlet {
+@WebServlet(urlPatterns = ("test"))
+public class TestServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(PolandTemperatureServlet.class);
     @Inject
@@ -36,13 +34,9 @@ public class PolandTemperatureServlet extends HttpServlet {
     @Inject
     private StationDao stationDao;
     @Inject
-    private StationMaxTempPolandDao stationMaxTempPolandDao;
-    @Inject
-    private StationMinTempPolandDao stationMinTempPolandDao;
-    @Inject
     private GetLastUpdateDate getLastUpdateDate;
     @Inject
-    private GetMinTempForPolandLastUpdate getMinTempForPolandLastUpdate;
+    private StationMinTempPolandDao stationMinTempPolandDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,27 +46,41 @@ public class PolandTemperatureServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
 
         LocalDateTime lastUpdate = getLastUpdateDate.get();
-        String lastUpdateString = getLastUpdateDate.getStringDateTime();
-
-        List<StationMaxTempPoland> stationMaxTempPolandList = stationMaxTempPolandDao.getMaxTempPolands(lastUpdate);
-
-//        double minTempForPolandLastUpdate = getMinTempForPolandLastUpdate.getTemp(lastUpdate);
-//        List<Station> listCitiesWithMinTemp = stationDao.getCitiesWithTemp(minTempForPolandLastUpdate, lastUpdate);
-
-        List<StationMinTempPoland> stationMinTempPolandList = stationMinTempPolandDao.getMinTempPolands(lastUpdate);
 
 
-        model.put("lastUpdateString", lastUpdateString);
-        model.put("listCitiesWithMaxTemp", stationMaxTempPolandList);
-        model.put("listCitiesWithMinTemp", stationMinTempPolandList);
+        double minTemp = 0;
+        List<Station> stationsList = new ArrayList<>();
+        LocalDateTime time = lastUpdate.minusHours(1);
 
-        template = templateProvider.getTemplate(getServletContext(), "poland-temperature");
+        for (int i = 0; i < 1; i++) {
+            if (i == 0){
+               minTemp = stationDao.getMinTempForPolandLastUpdate(lastUpdate).get(0).getStationTemperature();
+               List<Station> list = stationDao.getCitiesWithTemp(minTemp, lastUpdate);
+
+                for (int j = 0; j < list.size(); j++) {
+                    StationMinTempPoland stationMinTempPoland = new StationMinTempPoland();
+                    stationMinTempPoland.setStationMinTempPolandStationName(list.get(j).getStationName());
+                    stationMinTempPoland.setStationMinTempPolandStationNumber(list.get(j).getStationNumber());
+                    stationMinTempPoland.setStationMinTempPolandStationDateTime(list.get(j).getStationDateTime());
+                    stationMinTempPoland.setStationMinTempPolandStationTemperature(list.get(j).getStationTemperature());
+                    stationMinTempPolandDao.save(stationMinTempPoland);
+                }
+            }
+//            time = time.minusHours(1);
+        }
+
+
+
+
+
+
+        template = templateProvider.getTemplate(getServletContext(), "test");
         try {
-            LOG.info("Load template poland-temperature");
+
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-            LOG.warn("No load template poland-temperature");
+
         }
     }
 }

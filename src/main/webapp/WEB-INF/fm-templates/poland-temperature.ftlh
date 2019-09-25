@@ -53,9 +53,9 @@
                             <tbody>
                             <#list listCitiesWithMinTemp as min>
                                 <tr>
-                                    <td>${min.stationDateTime}</td>
-                                    <td>${min.stationName}</td>
-                                    <td>${min.stationTemperature?c} &#x2103</td>
+                                    <td>${min.stationMinTempPolandStationDateTime}</td>
+                                    <td>${min.stationMinTempPolandStationName}</td>
+                                    <td>${min.stationMinTempPolandStationTemperature?c} &#x2103</td>
                                 </tr>
                             </#list>
                         </table>

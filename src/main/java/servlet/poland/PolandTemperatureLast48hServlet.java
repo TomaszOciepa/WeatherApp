@@ -2,7 +2,9 @@ package servlet.poland;
 
 import data.GetLastUpdateDate;
 import data.dao.StationMaxTempPolandDao;
+import data.dao.StationMinTempPolandDao;
 import data.model.StationMaxTempPoland;
+import data.model.StationMinTempPoland;
 import freeMarker.TemplateProvider;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -31,6 +33,8 @@ public class PolandTemperatureLast48hServlet extends HttpServlet {
     @Inject
     private StationMaxTempPolandDao stationMaxTempPolandDao;
     @Inject
+    private StationMinTempPolandDao stationMinTempPolandDao;
+    @Inject
     private GetLastUpdateDate getLastUpdateDate;
 
     @Override
@@ -44,9 +48,11 @@ public class PolandTemperatureLast48hServlet extends HttpServlet {
         String lastUpdateString = getLastUpdateDate.getStringDateTime();
 
         List<StationMaxTempPoland> stationMaxTempPolandList = getMaxTempPolands(lastUpdate);
+        List<StationMinTempPoland> stationMinTempPolandList = getMinTempPolands(lastUpdate);
 
         model.put("lastUpdateString", lastUpdateString);
         model.put("maxTempForLast48h", stationMaxTempPolandList);
+        model.put("minTempForLast48h", stationMinTempPolandList);
 
 
         template = templateProvider.getTemplate(getServletContext(), "poland-temperature-last-48h");
@@ -78,5 +84,25 @@ public class PolandTemperatureLast48hServlet extends HttpServlet {
             lastUpdate = lastUpdate.minusHours(1);
         }
         return stationMaxTempPolandList;
+    }
+
+    private List<StationMinTempPoland> getMinTempPolands(LocalDateTime lastUpdate){
+        List<StationMinTempPoland> stationMinTempPolandsList = new ArrayList<>();
+
+        for (int i = 0; i < 48; i++) {
+            if (stationMinTempPolandDao.getMinTempPolands(lastUpdate).size() != 0){
+                List<StationMinTempPoland> list = stationMinTempPolandDao.getMinTempPolands(lastUpdate);
+                for (int j = 0; j < list.size(); j++) {
+                    stationMinTempPolandsList.add(list.get(j));
+                }
+            } else {
+                StationMinTempPoland stationMinTempPoland = new StationMinTempPoland();
+                stationMinTempPoland.setStationMinTempPolandStationDateTime(lastUpdate);
+                stationMinTempPoland.setStationMinTempPolandStationName("brak pomiaru");
+                stationMinTempPolandsList.add(stationMinTempPoland);
+            }
+            lastUpdate = lastUpdate.minusHours(1);
+        }
+        return stationMinTempPolandsList;
     }
 }
